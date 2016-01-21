@@ -41,25 +41,24 @@
     <DocumentationFile>bin\Dnn.Modules.Vendors.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke, Version=8.0.0.583, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\DotNetNuke.Core.8.0.0.583\lib\net40\DotNetNuke.dll</HintPath>
+  <Reference Include="DotNetNuke">
+    <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.dll</HintPath>
     </Reference>
     <Reference Include="DotNetNuke.Instrumentation">
-      <HintPath>packages\DotNetNuke.Instrumentation.8.0.0.583\lib\net40\DotNetNuke.Instrumentation.dll</HintPath>
+      <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.Instrumentation.dll</HintPath>
     </Reference>
     <Reference Include="DotNetNuke.Web">
-      <HintPath>packages\DotNetNuke.Web.8.0.0.580\lib\net40\DotNetNuke.Web.dll</HintPath>
+      <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.Web.dll</HintPath>
     </Reference>
     <Reference Include="DotNetNuke.Web.Deprecated">
-      <HintPath>packages\DotNetNuke.Web.Deprecated.8.0.0.580\lib\net40\DotNetNuke.Web.Deprecated.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetNuke.WebControls, Version=2.4.0.598, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Externals\DotNetNuke.WebControls.dll</HintPath>
+      <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.Web.Deprecated.dll</HintPath>
     </Reference>
     <Reference Include="DotNetNuke.WebUtility">
-      <HintPath>packages\DotNetNuke.Web.8.0.0.580\lib\net40\DotNetNuke.WebUtility.dll</HintPath>
+      <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.WebUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.WebUtility">
+      <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.WebControls.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
@@ -79,21 +78,19 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="Telerik.Web.UI, Version=2013.2.717.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>packages\DotNetNuke.Bundle.8.0.1.98\lib\net40\Telerik.Web.UI.dll</HintPath>
+      <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\net40\Telerik.Web.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Affiliates.ascx.cs">
       <DependentUpon>affiliates.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Affiliates.ascx.designer.cs">
       <DependentUpon>affiliates.ascx</DependentUpon>
     </Compile>
     <Compile Include="Banners.ascx.cs">
       <DependentUpon>banners.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Banners.ascx.designer.cs">
       <DependentUpon>banners.ascx</DependentUpon>
@@ -112,21 +109,18 @@
     <Compile Include="Data\IDataService.cs" />
     <Compile Include="EditAffiliate.ascx.cs">
       <DependentUpon>editaffiliate.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EditAffiliate.ascx.designer.cs">
       <DependentUpon>editaffiliate.ascx</DependentUpon>
     </Compile>
     <Compile Include="EditBanner.ascx.cs">
       <DependentUpon>editbanner.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EditBanner.ascx.designer.cs">
       <DependentUpon>editbanner.ascx</DependentUpon>
     </Compile>
     <Compile Include="EditVendors.ascx.cs">
       <DependentUpon>editvendors.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EditVendors.ascx.designer.cs">
       <DependentUpon>editvendors.ascx</DependentUpon>
@@ -137,7 +131,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vendors.ascx.cs">
       <DependentUpon>Vendors.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -148,7 +141,6 @@
     <Content Include="editaffiliate.ascx" />
     <Content Include="editbanner.ascx" />
     <Content Include="editvendors.ascx" />
-    <Content Include="Externals\DotNetNuke.WebControls.dll" />
     <Content Include="license.txt" />
     <Content Include="module.css" />
     <Content Include="Vendors.ascx" />
@@ -170,11 +162,8 @@
     <Content Include="App_LocalResources\EditVendors.ascx.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Providers\DataProviders\SqlDataProvider\08.00.00.SqlDataProvider" />
     <Content Include="Providers\DataProviders\SqlDataProvider\Uninstall.SqlDataProvider" />
