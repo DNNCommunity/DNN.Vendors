@@ -23,13 +23,12 @@
 using System;
 using System.Collections;
 using System.Web.UI.WebControls;
-
+using Dnn.Modules.Vendors.Components;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.Services.Mail;
-using DotNetNuke.Services.Vendors;
 using DotNetNuke.UI.Skins.Controls;
 using DotNetNuke.UI.Utilities;
 using DotNetNuke.UI.WebControls;
@@ -109,7 +108,6 @@ namespace Dnn.Modules.Vendors
             cmdDelete.Click += OnDeleteClick;
             cmdEmail.Click += OnEmailClick;
             cmdUpdate.Click += OnUpdateClick;
-            DNNTxtBannerGroup.PopulateOnDemand += PopulateBannersOnDemand;
 
             try
             {
@@ -362,7 +360,7 @@ namespace Dnn.Modules.Vendors
             var objBanner = objBanners.GetBanner(BannerId);
             if (objBanner != null)
             {
-                var objVendors = new VendorController();
+                var objVendors = new VendorsController();
                 var objVendor = objVendors.GetVendor(objBanner.VendorId, PortalId);
                 if (objVendor != null)
                 {
@@ -404,31 +402,6 @@ namespace Dnn.Modules.Vendors
                         }
                     }
                 }
-            }
-        }
-
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// DNNTxtBannerGroup_PopulateOnDemand runs when something is entered on the
-        /// BannerGroup field
-        /// </summary>
-        /// <remarks>
-        /// </remarks>
-        /// <history>
-        /// 	[vmasanas]	9/29/2006	Implement a callback to display current groups
-        ///  to user so the BannerGroup can be easily selected
-        /// </history>
-        /// -----------------------------------------------------------------------------
-        protected void PopulateBannersOnDemand(object source, DNNTextSuggestEventArgs e)
-        {
-            var objBanners = new BannerController();
-            var dt = objBanners.GetBannerGroups(PortalId);
-            dt.CaseSensitive = false;
-            var dr = dt.Select("GroupName like '" + e.Text + "%'");
-            foreach (var d in dr)
-            {
-                var objNode = new DNNNode(d["GroupName"].ToString()) {ID = e.Nodes.Count.ToString()};
-                e.Nodes.Add(objNode);
             }
         }
 

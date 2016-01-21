@@ -1,5 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="false" Inherits="Dnn.Modules.Vendors.Affiliates" Codebehind="Affiliates.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Assembly="DotNetNuke.Web" Namespace="DotNetNuke.Web.UI.WebControls" %>
+<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web.Deprecated" %>
 <div class="dnnForm dnnAffiliates dnnClear">
     <asp:DataGrid ID="grdAffiliates" runat="server" Width="100%" AutoGenerateColumns="false" EnableViewState="true" GridLines="None" CssClass="dnnAffiliatesGrid">
         <headerstyle cssclass="dnnGridHeader" verticalalign="Top"/>

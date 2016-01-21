@@ -22,19 +22,17 @@
 
 using System;
 using System.Collections;
-
+using Dnn.Modules.Vendors.Components;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Tabs;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.Services.Mail;
-using DotNetNuke.Services.Vendors;
 using DotNetNuke.UI;
 using DotNetNuke.UI.Skins.Controls;
 
 using Globals = DotNetNuke.Common.Globals;
-using DotNetNuke.Framework;
 using DotNetNuke.Framework.JavaScriptLibraries;
 
 #endregion
@@ -140,7 +138,7 @@ namespace Dnn.Modules.Vendors
                     addresssVendor.ModuleId = ModuleId;
                     addresssVendor.StartTabIndex = 4;
 
-                    var objVendors = new VendorController();
+                    var objVendors = new VendorsController();
                     if (VendorID != -1)
                     {
                         VendorInfo objVendor;
@@ -272,7 +270,7 @@ namespace Dnn.Modules.Vendors
             {
                 if (VendorID != -1)
                 {
-                    var objVendors = new VendorController();
+                    var objVendors = new VendorsController();
                     objVendors.DeleteVendor(VendorID);
                 }
                 Response.Redirect(Globals.NavigateURL());
@@ -309,7 +307,7 @@ namespace Dnn.Modules.Vendors
                     {
                         portalID = PortalId;
                     }
-                    var objVendors = new VendorController();
+                    var objVendors = new VendorsController();
                     var objVendor = new VendorInfo
                                         {
                                             PortalId = portalID,
@@ -339,9 +337,10 @@ namespace Dnn.Modules.Vendors
                         {
                             VendorID = objVendors.AddVendor(objVendor);
                         }
-                        catch
+                        catch(Exception exc)
                         {
-                            AddModuleMessage("ErrorAddVendor", ModuleMessage.ModuleMessageType.RedError);
+                            //AddModuleMessage("ErrorAddVendor", ModuleMessage.ModuleMessageType.RedError);
+                            Exceptions.ProcessModuleLoadException(this, exc);
                             return;
                         }
                     }

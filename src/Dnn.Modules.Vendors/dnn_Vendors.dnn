@@ -14,10 +14,24 @@
             <releaseNotes src="releaseNotes.txt" />
             <azureCompatible>true</azureCompatible>
             <components>
+              <component type="Script">
+                <scripts>
+                  <basePath>DesktopModules\Vendors</basePath>
+                  <script type="Install">
+                    <path>Providers\DataProviders\SqlDataProvider</path>
+                    <name>08.00.00.SqlDataProvider</name>
+                    <version>08.00.00</version>
+                  </script>
+                  <script type="UnInstall">
+                    <path>Providers\DataProviders\SqlDataProvider</path>
+                    <name>Uninstall.SqlDataProvider</name>
+                  </script>
+                </scripts>
+              </component>
                 <component type="Module">
                     <desktopModule>
                         <moduleName>Vendors</moduleName>
-                        <foldername>Admin/Vendors</foldername>
+                        <foldername>Vendors</foldername>
                         <businessControllerClass>Dnn.Modules.Vendors.Components.VendorsController</businessControllerClass>
                         <supportedFeatures>
                             <supportedFeature type="Upgradeable" />
@@ -28,7 +42,7 @@
                                 <moduleControls>
                                     <moduleControl>
                                         <controlKey />
-                                        <controlSrc>DesktopModules/Admin/Vendors/Vendors.ascx</controlSrc>
+                                        <controlSrc>DesktopModules/Vendors/Vendors.ascx</controlSrc>
                                         <controlTitle />
                                         <controlType>View</controlType>
                                         <iconFile></iconFile>
@@ -39,7 +53,7 @@
                                     </moduleControl>
                                     <moduleControl>
                                         <controlKey>Affiliate</controlKey>
-                                        <controlSrc>DesktopModules/Admin/Vendors/EditAffiliate.ascx</controlSrc>
+                                        <controlSrc>DesktopModules/Vendors/EditAffiliate.ascx</controlSrc>
                                         <controlTitle>Affiliate Management</controlTitle>
                                         <controlType>Edit</controlType>
                                         <iconFile></iconFile>
@@ -50,7 +64,7 @@
                                     </moduleControl>
                                     <moduleControl>
                                         <controlKey>Banner</controlKey>
-                                        <controlSrc>DesktopModules/Admin/Vendors/editbanner.ascx</controlSrc>
+                                        <controlSrc>DesktopModules/Vendors/editbanner.ascx</controlSrc>
                                         <controlTitle>Banner</controlTitle>
                                         <controlType>Edit</controlType>
                                         <iconFile></iconFile>
@@ -61,7 +75,7 @@
                                     </moduleControl>
                                     <moduleControl>
                                         <controlKey>Edit</controlKey>
-                                        <controlSrc>DesktopModules/Admin/Vendors/editvendors.ascx</controlSrc>
+                                        <controlSrc>DesktopModules/Vendors/editvendors.ascx</controlSrc>
                                         <controlTitle>Edit Vendors</controlTitle>
                                         <controlType>Edit</controlType>
                                         <iconFile></iconFile>
@@ -94,7 +108,7 @@
                 </component>
                 <component type="ResourceFile">
                     <resourceFiles>
-                        <basePath>DesktopModules/Admin/Vendors</basePath>
+                        <basePath>DesktopModules/Vendors</basePath>
                         <resourceFile>
                             <name>Resources.zip</name>
                         </resourceFile>
@@ -103,7 +117,7 @@
                 <component type="Cleanup" version="08.00.00" fileName ="08.00.00.txt" />
                 <component type="File">
                     <files>
-                        <basePath>DesktopModules\Admin\Vendors</basePath>
+                        <basePath>DesktopModules\Vendors</basePath>
                         <file>
                             <name>08.00.00.txt</name>
                         </file>

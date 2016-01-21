@@ -41,16 +41,25 @@
     <DocumentationFile>bin\Dnn.Modules.Vendors.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke.Instrumentation, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DotNetNuke, Version=8.0.0.583, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DotNetNuke.Instrumentation\bin\DotNetNuke.Instrumentation.dll</HintPath>
+      <HintPath>packages\DotNetNuke.Core.8.0.0.583\lib\net40\DotNetNuke.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetNuke.Web.Client, Version=7.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="DotNetNuke.Instrumentation">
+      <HintPath>packages\DotNetNuke.Instrumentation.8.0.0.583\lib\net40\DotNetNuke.Instrumentation.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.Web">
+      <HintPath>packages\DotNetNuke.Web.8.0.0.580\lib\net40\DotNetNuke.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.Web.Deprecated">
+      <HintPath>packages\DotNetNuke.Web.Deprecated.8.0.0.580\lib\net40\DotNetNuke.Web.Deprecated.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.WebControls, Version=2.4.0.598, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DotNetNuke.Web.Client\bin\DotNetNuke.Web.Client.dll</HintPath>
+      <HintPath>Externals\DotNetNuke.WebControls.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetNuke.WebControls">
-      <HintPath>..\..\Controls\DotNetNuke.WebControls\bin\DotNetNuke.WebControls.dll</HintPath>
+    <Reference Include="DotNetNuke.WebUtility">
+      <HintPath>packages\DotNetNuke.Web.8.0.0.580\lib\net40\DotNetNuke.WebUtility.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
@@ -69,14 +78,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Telerik.Web.UI">
-      <HintPath>..\..\Components\Telerik\bin\Telerik.Web.UI.dll</HintPath>
+    <Reference Include="Telerik.Web.UI, Version=2013.2.717.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <HintPath>packages\DotNetNuke.Bundle.8.0.1.98\lib\net40\Telerik.Web.UI.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\SolutionInfo.cs">
-      <Link>SolutionInfo.cs</Link>
-    </Compile>
     <Compile Include="Affiliates.ascx.cs">
       <DependentUpon>affiliates.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -91,7 +98,18 @@
     <Compile Include="Banners.ascx.designer.cs">
       <DependentUpon>banners.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Components\AffiliateController.cs" />
+    <Compile Include="Components\AffiliateInfo.cs" />
+    <Compile Include="Components\BannerController.cs" />
+    <Compile Include="Components\BannerInfo.cs" />
+    <Compile Include="Components\BannerTypeController.cs" />
+    <Compile Include="Components\BannerTypeInfo.cs" />
+    <Compile Include="Components\ClassificationController.cs" />
+    <Compile Include="Components\ClassificationInfo.cs" />
+    <Compile Include="Components\VendorInfo.cs" />
     <Compile Include="Components\VendorsController.cs" />
+    <Compile Include="Data\DataService.cs" />
+    <Compile Include="Data\IDataService.cs" />
     <Compile Include="EditAffiliate.ascx.cs">
       <DependentUpon>editaffiliate.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -130,24 +148,11 @@
     <Content Include="editaffiliate.ascx" />
     <Content Include="editbanner.ascx" />
     <Content Include="editvendors.ascx" />
+    <Content Include="Externals\DotNetNuke.WebControls.dll" />
     <Content Include="license.txt" />
     <Content Include="module.css" />
     <Content Include="Vendors.ascx" />
     <Content Include="releaseNotes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\DotNetNuke.WebUtility\DotNetNuke.WebUtility.vbproj">
-      <Project>{4912f062-f8a8-4f9d-8f8e-244ebee1acbd}</Project>
-      <Name>DotNetNuke.WebUtility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DotNetNuke.Web\DotNetNuke.Web.csproj">
-      <Project>{ee1329fe-fd88-4e1a-968c-345e394ef080}</Project>
-      <Name>DotNetNuke.Web</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Library\DotNetNuke.Library.csproj">
-      <Project>{6b29aded-7b56-4484-bea5-c0e09079535b}</Project>
-      <Name>DotNetNuke.Library</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Module.build" />
@@ -163,6 +168,16 @@
     <Content Include="App_LocalResources\EditAffiliate.ascx.resx" />
     <Content Include="App_LocalResources\EditBanner.ascx.resx" />
     <Content Include="App_LocalResources\EditVendors.ascx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Providers\DataProviders\SqlDataProvider\08.00.00.SqlDataProvider" />
+    <Content Include="Providers\DataProviders\SqlDataProvider\Uninstall.SqlDataProvider" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
