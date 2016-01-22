@@ -23,14 +23,13 @@
 using System;
 using System.Collections;
 using System.Linq;
+using Dnn.Modules.Vendors.Components;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Modules;
-using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Security;
 using DotNetNuke.Security.Permissions;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.Localization;
-using DotNetNuke.Services.Vendors;
 using DotNetNuke.UI.Utilities;
 using Telerik.Web.UI;
 using Globals = DotNetNuke.Common.Globals;
@@ -81,7 +80,7 @@ namespace Dnn.Modules.Vendors
 			
             //Get the list of vendors from the database
             var totalRecords = 0;
-            var vendorController = new VendorController();
+            var vendorController = new Dnn.Modules.Vendors.Components.VendorsController();
             int portal = Globals.IsHostTab(PortalSettings.ActiveTab.TabID) ? Null.NullInteger : PortalId;
             
 			if (String.IsNullOrEmpty(_searchFilter))
@@ -217,7 +216,7 @@ namespace Dnn.Modules.Vendors
         {
             try
             {
-                var objVendors = new VendorController();
+                var objVendors = new VendorsController();
                 if (Globals.IsHostTab(PortalSettings.ActiveTab.TabID))
                 {
                     objVendors.DeleteVendors();

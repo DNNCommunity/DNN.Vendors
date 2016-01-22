@@ -2,9 +2,11 @@
 <%@ Register TagPrefix="dnn" TagName="Address" Src="~/controls/Address.ascx"%>
 <%@ Register TagPrefix="dnn" TagName="Audit" Src="~/controls/ModuleAuditControl.ascx" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
-<%@ Register TagPrefix="Portal" TagName="URL" Src="~/controls/DnnUrlControl.ascx" %>
-<%@ Reference Control="~/DesktopModules/Admin/Vendors/Affiliates.ascx" %>
-<%@ Reference Control="~/DesktopModules/Admin/Vendors/Banners.ascx" %>
+<%@ Register TagPrefix="dnn" TagName="URL" Src="~/controls/DnnUrlControl.ascx" %>
+<%@ Register TagPrefix="dnn" Assembly="DotNetNuke.WebControls" Namespace="DotNetNuke.UI.WebControls" %>
+<%@ Register TagPrefix="dnn" Assembly="DotNetNuke.WebControls" Namespace="DotNetNuke.UI.UserControls" %>
+<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web.Deprecated" %>
+<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
 <div class="dnnForm dnnEditVendor dnnClear" id="dnnEditVendor">
     <div class="dnnFormExpandContent"><a href=""><%=Localization.GetString("ExpandAll", Localization.SharedResourceFile)%></a></div>   
     <div>
@@ -50,7 +52,7 @@
             </div>
             <div id="rowVendor1" runat="server" class="dnnFormItem">
                 <dnn:label id="plLogo" runat="server" controlname="ctlLogo" />
-                <div class="dnnLeft"><portal:url id="ctlLogo" runat="server" width="200" showurls="False" showtabs="False" showlog="False" showtrack="False" required="False" /></div>
+                <div class="dnnLeft"><dnn:url id="ctlLogo" runat="server" width="200" showurls="False" showtabs="False" showlog="False" showtrack="False" required="False" /></div>
             </div>
             <div id="rowVendor2" runat="server" class="dnnFormItem">
                 <dnn:label id="plAuthorized" runat="server" controlname="chkAuthorized" />

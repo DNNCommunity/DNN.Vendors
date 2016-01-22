@@ -22,14 +22,12 @@
 
 using System;
 using System.Collections;
-
+using Dnn.Modules.Vendors.Components;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.Services.Mail;
-using DotNetNuke.Services.Vendors;
 using DotNetNuke.UI.Skins.Controls;
-using DotNetNuke.UI.Utilities;
 
 using Globals = DotNetNuke.Common.Globals;
 
@@ -187,7 +185,7 @@ namespace Dnn.Modules.Vendors
         /// -----------------------------------------------------------------------------
         protected void OnSendClick(object sender, EventArgs e)
         {
-            var objVendors = new VendorController();
+            var objVendors = new VendorsController();
 
             var objVendor = objVendors.GetVendor(VendorId, PortalId);
             if (objVendor != null)

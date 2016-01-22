@@ -1,0 +1,806 @@
+﻿IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddAffiliate]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}AddAffiliate
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}AddAffiliate
+
+@VendorId      int,
+@StartDate     datetime,
+@EndDate       datetime,
+@CPC           float,
+@CPA           float
+
+as
+
+insert into {objectQualifier}Affiliates (
+    VendorId,
+    StartDate,
+    EndDate,
+    CPC,
+    Clicks,
+    CPA,
+    Acquisitions
+)
+values (
+    @VendorId,
+    @StartDate,
+    @EndDate,
+    @CPC,
+    0,
+    @CPA,
+    0
+)
+
+select SCOPE_IDENTITY()
+
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}DeleteAffiliate]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}DeleteAffiliate
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}DeleteAffiliate
+
+@AffiliateId int
+
+as
+
+delete
+from   {objectQualifier}Affiliates
+where  AffiliateId = @AffiliateId
+
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}GetAffiliates]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}GetAffiliates
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}GetAffiliates
+    @VendorId INT
+AS
+    SELECT AffiliateId,
+           StartDate,
+           EndDate,
+           CPC,
+           Clicks,
+           Clicks * CPC AS 'CPCTotal',
+           CPA,
+           Acquisitions,
+           Acquisitions * CPA 'CPATotal'
+    FROM   {databaseOwner}{objectQualifier}Affiliates
+    WHERE  VendorId = @VendorId
+    ORDER  BY StartDate DESC
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}GetAffiliate]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}GetAffiliate
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}GetAffiliate]
+	@AffiliateId int
+AS
+
+	SELECT	*
+	FROM	{databaseOwner}{objectQualifier}Affiliates 
+	WHERE	AffiliateId = @AffiliateId
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}UpdateAffiliate]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}UpdateAffiliate
+GO
+
+create procedure {databaseOwner}{objectQualifier}UpdateAffiliate
+
+@AffiliateId int,
+@StartDate         datetime,
+@EndDate           datetime,
+@CPC               float,
+@CPA               float
+
+as
+
+update {objectQualifier}Affiliates
+set    StartDate   = @StartDate,
+       EndDate     = @EndDate,
+       CPC         = @CPC,
+       CPA         = @CPA
+where  AffiliateId = @AffiliateId 
+
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}UpdateAffiliateStats]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}UpdateAffiliateStats
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}UpdateAffiliateStats]
+	@AffiliateId  int,
+	@Clicks       int,
+	@Acquisitions int
+AS
+	UPDATE {databaseOwner}{objectQualifier}Affiliates
+		SET	Clicks = Clicks + @Clicks,
+			Acquisitions = Acquisitions + @Acquisitions
+		WHERE  AffiliateId = @AffiliateId 
+			AND    ( StartDate < getdate() OR StartDate IS NULL ) 
+			AND    ( EndDate > getdate() OR EndDate IS NULL )
+
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}GetVendorClassifications]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}GetVendorClassifications
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}GetVendorClassifications
+    @VendorId  INT
+AS
+    SELECT ClassificationId,
+           ClassificationName,
+           CASE WHEN EXISTS ( SELECT 1 FROM {databaseOwner}{objectQualifier}VendorClassification vc WHERE vc.VendorId = @VendorId AND vc.ClassificationId = {objectQualifier}Classification.ClassificationId ) THEN 1 ELSE 0 END AS 'IsAssociated'
+    FROM {databaseOwner}{objectQualifier}Classification
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}DeleteVendorClassifications]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}DeleteVendorClassifications
+GO
+
+create procedure {databaseOwner}{objectQualifier}DeleteVendorClassifications
+
+@VendorId  int
+
+as
+
+delete
+from {objectQualifier}VendorClassification
+where  VendorId = @VendorId
+
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddVendorClassification]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}AddVendorClassification
+GO
+
+create procedure {databaseOwner}{objectQualifier}AddVendorClassification
+
+@VendorId           int,
+@ClassificationId   int
+
+as
+
+insert into {objectQualifier}VendorClassification ( 
+  VendorId,
+  ClassificationId
+)
+values (
+  @VendorId,
+  @ClassificationId
+)
+
+select SCOPE_IDENTITY()
+
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddVendor]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}AddVendor
+GO
+
+CREATE procedure {databaseOwner}{objectQualifier}AddVendor
+
+@PortalId 	int,
+@VendorName nvarchar(50),
+@Unit    	nvarchar(50),
+@Street 	nvarchar(50),
+@City		nvarchar(50),
+@Region	    nvarchar(50),
+@Country	nvarchar(50),
+@PostalCode	nvarchar(50),
+@Telephone	nvarchar(50),
+@Fax   	    nvarchar(50),
+@Cell   	nvarchar(50),
+@Email    	nvarchar(50),
+@Website	nvarchar(100),
+@FirstName	nvarchar(50),
+@LastName	nvarchar(50),
+@UserName   nvarchar(100),
+@LogoFile   nvarchar(100),
+@KeyWords   text,
+@Authorized bit
+
+as
+
+insert into {objectQualifier}Vendors (
+  VendorName,
+  Unit,
+  Street,
+  City,
+  Region,
+  Country,
+  PostalCode,
+  Telephone,
+  PortalId,
+  Fax,
+  Cell,
+  Email,
+  Website,
+  FirstName,
+  Lastname,
+  ClickThroughs,
+  Views,
+  CreatedByUser,
+  CreatedDate,
+  LogoFile,
+  KeyWords,
+  Authorized
+)
+values (
+  @VendorName,
+  @Unit,
+  @Street,
+  @City,
+  @Region,
+  @Country,
+  @PostalCode,
+  @Telephone,
+  @PortalId,
+  @Fax,
+  @Cell,
+  @Email,
+  @Website,
+  @FirstName,
+  @LastName,
+  0,
+  0,
+  @UserName,
+  getdate(), 
+  @LogoFile,
+  @KeyWords,
+  @Authorized
+)
+
+select SCOPE_IDENTITY()
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}DeleteVendor]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}DeleteVendor
+GO
+
+create procedure {databaseOwner}{objectQualifier}DeleteVendor
+
+@VendorId int
+
+as
+
+delete
+from {objectQualifier}Vendors
+where  VendorId = @VendorId
+
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}GetVendor]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}GetVendor
+GO
+
+CREATE procedure {databaseOwner}{objectQualifier}GetVendor
+
+@VendorId int,
+@PortalId int
+
+as
+
+select {databaseOwner}{objectQualifier}Vendors.VendorName, 
+       {databaseOwner}{objectQualifier}Vendors.Unit, 
+       {databaseOwner}{objectQualifier}Vendors.Street, 
+       {databaseOwner}{objectQualifier}Vendors.City, 
+       {databaseOwner}{objectQualifier}Vendors.Region, 
+       {databaseOwner}{objectQualifier}Vendors.Country, 
+       {databaseOwner}{objectQualifier}Vendors.PostalCode, 
+       {databaseOwner}{objectQualifier}Vendors.Telephone,
+       {databaseOwner}{objectQualifier}Vendors.Fax,
+       {databaseOwner}{objectQualifier}Vendors.Cell,
+       {databaseOwner}{objectQualifier}Vendors.Email,
+       {databaseOwner}{objectQualifier}Vendors.Website,
+       {databaseOwner}{objectQualifier}Vendors.FirstName,
+       {databaseOwner}{objectQualifier}Vendors.LastName,
+       {databaseOwner}{objectQualifier}Vendors.ClickThroughs,
+       {databaseOwner}{objectQualifier}Vendors.Views,
+       {databaseOwner}{objectQualifier}Users.FirstName + ' ' + {databaseOwner}{objectQualifier}Users.LastName As CreatedByUser,
+       {objectQualifier}Vendors.CreatedDate,
+       case when {databaseOwner}{objectQualifier}Files.FileName is null then {databaseOwner}{objectQualifier}Vendors.LogoFile else {objectQualifier}Folders.FolderPath + {objectQualifier}Files.FileName end as LogoFile,
+       {databaseOwner}{objectQualifier}Vendors.KeyWords,
+       {databaseOwner}{objectQualifier}Vendors.Authorized,
+       {databaseOwner}{objectQualifier}Vendors.PortalId
+from {databaseOwner}{objectQualifier}Folders 
+INNER JOIN {databaseOwner}{objectQualifier}Files ON {databaseOwner}{objectQualifier}Folders.FolderID = {databaseOwner}{objectQualifier}Files.FolderID RIGHT OUTER JOIN
+{databaseOwner}{objectQualifier}Vendors LEFT OUTER JOIN
+{databaseOwner}{objectQualifier}Users ON {databaseOwner}{objectQualifier}Vendors.CreatedByUser = {databaseOwner}{objectQualifier}Users.UserID ON 'fileid=' + CONVERT(varchar, {databaseOwner}{objectQualifier}Files.FileId) = {databaseOwner}{objectQualifier}Vendors.LogoFile
+where  VendorId = @VendorId
+and    (({objectQualifier}Vendors.PortalId = @PortalId) or ({objectQualifier}Vendors.PortalId is null and @PortalId is null))
+
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}GetVendors]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+  DROP PROCEDURE {databaseOwner}{objectQualifier}GetVendors
+GO
+
+CREATE procedure {databaseOwner}{objectQualifier}GetVendors
+	@PortalID int,
+	@UnAuthorized bit,
+	@PageSize int,
+	@PageIndex int
+AS
+
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	-- Set the page bounds
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+
+	CREATE TABLE #PageIndex 
+	(
+		IndexID		int IDENTITY (1, 1) NOT NULL,
+		VendorId	int
+	)
+
+	INSERT INTO #PageIndex (VendorId)
+	SELECT VendorId
+	FROM {objectQualifier}Vendors
+	WHERE ( ((Authorized = 0 AND @UnAuthorized = 1) OR @UnAuthorized = 0 ) AND ((PortalId = @PortalID) or (@PortalID is null and PortalId is null)) )
+	ORDER BY VendorId DESC
+
+
+	SELECT COUNT(*) as TotalRecords
+	FROM #PageIndex
+
+
+	SELECT {databaseOwner}{objectQualifier}Vendors.*,
+       		( select count(*) from {databaseOwner}{objectQualifier}Banners where {databaseOwner}{objectQualifier}Banners.VendorId = {databaseOwner}{objectQualifier}Vendors.VendorId ) AS 'Banners'
+	FROM {databaseOwner}{objectQualifier}Vendors
+	INNER JOIN #PageIndex PageIndex
+		ON {databaseOwner}{objectQualifier}Vendors.VendorId = PageIndex.VendorId
+	WHERE ( (PageIndex.IndexID > @PageLowerBound) OR @PageLowerBound is null )	
+		AND ( (PageIndex.IndexID < @PageUpperBound) OR @PageUpperBound is null )	
+	ORDER BY
+		PageIndex.IndexID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}GetVendorsByEmail]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}GetVendorsByEmail]
+GO
+
+ CREATE procedure {databaseOwner}{objectQualifier}GetVendorsByEmail
+	@Filter nvarchar(50),
+	@PortalID int,
+	@PageSize int,
+	@PageIndex int
+AS
+
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	-- Set the page bounds
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+
+	CREATE TABLE #PageIndex 
+	(
+		IndexID		int IDENTITY (1, 1) NOT NULL,
+		VendorId	int
+	)
+
+	INSERT INTO #PageIndex (VendorId)
+	SELECT VendorId
+	FROM {databaseOwner}{objectQualifier}Vendors
+	WHERE ( (Email like @Filter + '%') AND ((PortalId = @PortalID) or (@PortalID is null and PortalId is null)) )
+	ORDER BY VendorId DESC
+
+
+	SELECT COUNT(*) as TotalRecords
+	FROM #PageIndex
+
+
+	SELECT {databaseOwner}{objectQualifier}Vendors.*,
+       		( select count(*) from {databaseOwner}{objectQualifier}Banners where {databaseOwner}{objectQualifier}Banners.VendorId = {databaseOwner}{objectQualifier}Vendors.VendorId ) AS 'Banners'
+	FROM {databaseOwner}{objectQualifier}Vendors
+	INNER JOIN #PageIndex PageIndex
+		ON {databaseOwner}{objectQualifier}Vendors.VendorId = PageIndex.VendorId
+	WHERE ( (PageIndex.IndexID > @PageLowerBound) OR @PageLowerBound is null )	
+		AND ( (PageIndex.IndexID < @PageUpperBound) OR @PageUpperBound is null )	
+	ORDER BY
+		PageIndex.IndexID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}GetVendorsByName]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}GetVendorsByName]
+GO
+
+CREATE procedure {databaseOwner}{objectQualifier}GetVendorsByName
+	@Filter nvarchar(50),
+	@PortalID int,
+	@PageSize int,
+	@PageIndex int
+AS
+
+	DECLARE @PageLowerBound int
+	DECLARE @PageUpperBound int
+	-- Set the page bounds
+	SET @PageLowerBound = @PageSize * @PageIndex
+	SET @PageUpperBound = @PageLowerBound + @PageSize + 1
+
+	CREATE TABLE #PageIndex 
+	(
+		IndexID		int IDENTITY (1, 1) NOT NULL,
+		VendorId	int
+	)
+
+	INSERT INTO #PageIndex (VendorId)
+	SELECT VendorId
+	FROM {databaseOwner}{objectQualifier}Vendors
+	WHERE ( (VendorName like @Filter + '%') AND ((PortalId = @PortalID) or (@PortalID is null and PortalId is null)) )
+	ORDER BY VendorId DESC
+
+
+	SELECT COUNT(*) as TotalRecords
+	FROM #PageIndex
+
+
+	SELECT {databaseOwner}{objectQualifier}Vendors.*,
+       		( select count(*) from {databaseOwner}{objectQualifier}Banners where {databaseOwner}{objectQualifier}Banners.VendorId = {objectQualifier}Vendors.VendorId ) AS 'Banners'
+	FROM {databaseOwner}{objectQualifier}Vendors
+	INNER JOIN #PageIndex PageIndex
+		ON {databaseOwner}{objectQualifier}Vendors.VendorId = PageIndex.VendorId
+	WHERE ( (PageIndex.IndexID > @PageLowerBound) OR @PageLowerBound is null )	
+		AND ( (PageIndex.IndexID < @PageUpperBound) OR @PageUpperBound is null )	
+	ORDER BY
+		PageIndex.IndexID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}UpdateVendor]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}UpdateVendor]
+GO
+
+CREATE procedure {databaseOwner}{objectQualifier}UpdateVendor
+
+@VendorId	int,
+@VendorName nvarchar(50),
+@Unit	 	nvarchar(50),
+@Street 	nvarchar(50),
+@City		nvarchar(50),
+@Region	    nvarchar(50),
+@Country	nvarchar(50),
+@PostalCode	nvarchar(50),
+@Telephone	nvarchar(50),
+@Fax		nvarchar(50),
+@Cell		nvarchar(50),
+@Email		nvarchar(50),
+@Website	nvarchar(100),
+@FirstName	nvarchar(50),
+@LastName	nvarchar(50),
+@UserName   nvarchar(100),
+@LogoFile   nvarchar(100),
+@KeyWords   text,
+@Authorized bit
+
+as
+
+update {objectQualifier}Vendors
+set    VendorName    = @VendorName,
+       Unit          = @Unit,
+       Street        = @Street,
+       City          = @City,
+       Region        = @Region,
+       Country       = @Country,
+       PostalCode    = @PostalCode,
+       Telephone     = @Telephone,
+       Fax           = @Fax,
+       Cell          = @Cell,
+       Email         = @Email,
+       Website       = @Website,
+       FirstName     = @FirstName,
+       LastName      = @LastName,
+       CreatedByUser = @UserName,
+       CreatedDate   = getdate(),
+       LogoFile      = @LogoFile,
+       KeyWords      = @KeyWords,
+       Authorized    = @Authorized
+where  VendorId = @VendorId
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}AddBanner]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}AddBanner]
+GO
+
+create procedure {databaseOwner}{objectQualifier}AddBanner
+
+@BannerName    nvarchar(100),
+@VendorId      int,
+@ImageFile     nvarchar(100),
+@URL           nvarchar(255),
+@Impressions   int,
+@CPM           float,
+@StartDate     datetime,
+@EndDate       datetime,
+@UserName      nvarchar(100),
+@BannerTypeId  int,
+@Description   nvarchar(2000),
+@GroupName     nvarchar(100),
+@Criteria      bit,
+@Width         int,
+@Height        int
+
+as
+
+insert into {objectQualifier}Banners (
+    VendorId,
+    ImageFile,
+    BannerName,
+    URL,
+    Impressions,
+    CPM,
+    Views,
+    ClickThroughs,
+    StartDate,
+    EndDate,
+    CreatedByUser,
+    CreatedDate,
+    BannerTypeId,
+    Description,
+    GroupName,
+    Criteria,
+    Width,
+    Height
+)
+values (
+    @VendorId,
+    @ImageFile,
+    @BannerName,
+    @URL,
+    @Impressions,
+    @CPM,
+    0,
+    0,
+    @StartDate,
+    @EndDate,
+    @UserName,
+    getdate(),
+    @BannerTypeId,
+    @Description,
+    @GroupName,
+    @Criteria,
+    @Width,
+    @Height
+)
+
+select SCOPE_IDENTITY()
+
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}DeleteBanner]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}DeleteBanner]
+GO
+
+create procedure {databaseOwner}{objectQualifier}DeleteBanner
+
+@BannerId int
+
+as
+
+delete
+from {objectQualifier}Banners
+where  BannerId = @BannerId
+
+
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}FindBanners]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}FindBanners]
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}FindBanners]
+	@PortalID     int,
+	@BannerTypeId int,
+	@GroupName    nvarchar(100)
+
+AS
+SELECT  B.BannerId,
+		B.VendorId,
+		BannerName,
+		URL,
+		CASE WHEN LEFT(LOWER(ImageFile), 6) = 'fileid' 
+			THEN
+				(SELECT Folder + FileName  
+					FROM {databaseOwner}{objectQualifier}vw_Files 
+					WHERE 'fileid=' + convert(varchar,{databaseOwner}{objectQualifier}vw_Files.FileID) = ImageFile
+				) 
+			ELSE 
+				ImageFile  
+			END 
+		AS ImageFile,
+		Impressions,
+		CPM,
+		B.Views,
+		B.ClickThroughs,
+		StartDate,
+		EndDate,
+		BannerTypeId,
+		Description,
+		GroupName,
+		Criteria,
+		B.Width,
+		B.Height,
+		B.ImageFile AS ImageFileRaw
+FROM    {databaseOwner}{objectQualifier}Banners B
+INNER JOIN {databaseOwner}{objectQualifier}Vendors V ON B.VendorId = V.VendorId
+WHERE   (B.BannerTypeId = @BannerTypeId or @BannerTypeId is null)
+AND     (B.GroupName = @GroupName or @GroupName is null)
+AND     ((V.PortalId = @PortalID) or (@PortalID is null and V.PortalId is null))
+AND     V.Authorized = 1 
+AND     (getdate() <= B.EndDate or B.EndDate is null)
+ORDER BY BannerId
+
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}GetBanner]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure {databaseOwner}[{objectQualifier}GetBanner]
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}GetBanner]
+@BannerId int
+as
+select B.BannerId,
+	   B.VendorId,
+	   case when F.FileName is null then B.ImageFile else {databaseOwner}{objectQualifier}Folders.FolderPath + F.FileName end As ImageFile,
+	   B.BannerName,
+	   B.Impressions,
+	   B.CPM,
+	   B.Views,
+	   B.ClickThroughs,
+	   B.StartDate,
+	   B.EndDate,
+	   U.FirstName + ' ' + U.LastName AS CreatedByUser,
+	   B.CreatedDate,
+	   B.BannerTypeId,
+	   B.Description,
+	   B.GroupName,
+	   B.Criteria,
+	   B.URL,        
+	   B.Width,
+	   B.Height,
+	   B.ImageFile AS ImageFileRaw
+from   {databaseOwner}{objectQualifier}Folders INNER JOIN
+       {databaseOwner}{objectQualifier}Files AS F ON {databaseOwner}{objectQualifier}Folders.FolderID = F.FolderID RIGHT OUTER JOIN
+       {databaseOwner}{objectQualifier}Banners AS B INNER JOIN
+       {databaseOwner}{objectQualifier}Vendors AS V ON B.VendorId = V.VendorId LEFT OUTER JOIN
+       {databaseOwner}{objectQualifier}Users AS U ON B.CreatedByUser = U.UserID ON 'FileId=' + CONVERT(varchar, F.FileId) = B.ImageFile
+where  B.BannerId = @BannerId
+
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}GetBannerGroups]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	drop procedure {databaseOwner}[{objectQualifier}GetBannerGroups]
+GO
+
+CREATE PROCEDURE {databaseOwner}[{objectQualifier}GetBannerGroups]
+	@PortalId int
+AS
+
+SELECT  GroupName
+FROM {databaseOwner}{objectQualifier}Banners
+INNER JOIN {databaseOwner}{objectQualifier}Vendors ON 
+	{databaseOwner}{objectQualifier}Banners.VendorId = {databaseOwner}{objectQualifier}Vendors.VendorId
+WHERE ({databaseOwner}{objectQualifier}Vendors.PortalId = @PortalId) OR 
+	(@PortalId is null and {databaseOwner}{objectQualifier}Vendors.PortalId is null)
+GROUP BY GroupName
+ORDER BY GroupName
+
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}GetBanners]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	drop procedure {databaseOwner}[{objectQualifier}GetBanners]
+GO
+
+create procedure {databaseOwner}{objectQualifier}GetBanners
+
+@VendorId int
+
+as
+
+select BannerId,
+       BannerName,
+       URL,
+       Impressions,
+       CPM,
+       Views,
+       ClickThroughs,
+       StartDate,
+       EndDate,
+       BannerTypeId,
+       Description,
+       GroupName,
+       Criteria,
+       Width,
+       Height
+from   {objectQualifier}Banners
+where  VendorId = @VendorId
+order  by CreatedDate desc
+
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}UpdateBanner]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	drop procedure {databaseOwner}[{objectQualifier}UpdateBanner]
+GO
+
+create procedure {databaseOwner}{objectQualifier}UpdateBanner
+
+@BannerId     int,
+@BannerName   nvarchar(100),
+@ImageFile    nvarchar(100),
+@URL          nvarchar(255),
+@Impressions  int,
+@CPM          float,
+@StartDate    datetime,
+@EndDate      datetime,
+@UserName     nvarchar(100),
+@BannerTypeId int,
+@Description  nvarchar(2000),
+@GroupName    nvarchar(100),
+@Criteria     bit,
+@Width        int,
+@Height       int
+
+as
+
+update {objectQualifier}Banners
+set    ImageFile     = @ImageFile,
+       BannerName    = @BannerName,
+       URL           = @URL,
+       Impressions   = @Impressions,
+       CPM           = @CPM,
+       StartDate     = @StartDate,
+       EndDate       = @EndDate,
+       CreatedByUser = @UserName,
+       CreatedDate   = getdate(),
+       BannerTypeId  = @BannerTypeId,
+       Description   = @Description,
+       GroupName     = @GroupName,
+       Criteria      = @Criteria,
+       Width         = @Width,
+       Height        = @Height
+where  BannerId = @BannerId 
+
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}UpdateBannerClickThrough]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	drop procedure {databaseOwner}[{objectQualifier}UpdateBannerClickThrough]
+GO
+
+create procedure {databaseOwner}{objectQualifier}UpdateBannerClickThrough
+
+@BannerId int,
+@VendorId int
+
+as
+
+update {objectQualifier}Banners
+set    ClickThroughs = ClickThroughs + 1
+where  BannerId = @BannerId
+and    VendorId = @VendorId
+
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}UpdateBannerViews]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+	drop procedure {databaseOwner}[{objectQualifier}UpdateBannerViews]
+GO
+
+create procedure {databaseOwner}{objectQualifier}UpdateBannerViews
+
+@BannerId  int, 
+@StartDate datetime, 
+@EndDate   datetime
+
+as
+
+update {objectQualifier}Banners
+set    Views = Views + 1,
+       StartDate = @StartDate,
+       EndDate = @EndDate
+where  BannerId = @BannerId
+
+GO

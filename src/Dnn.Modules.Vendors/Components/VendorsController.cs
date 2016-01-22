@@ -20,9 +20,14 @@
 #endregion
 
 using System;
+using System.Collections;
+using System.Data;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Definitions;
 using DotNetNuke.Services.Upgrade;
+using Dnn.Modules.Vendors.Data;
+using DotNetNuke.Common.Utilities;
+using DotNetNuke.Data;
 
 namespace Dnn.Modules.Vendors.Components
 {
@@ -31,6 +36,8 @@ namespace Dnn.Modules.Vendors.Components
     /// </summary>
     public class VendorsController : IUpgradeable
     {
+        private IDataService _dataService = new DataService();
+
         /// <summary>
         /// 
         /// </summary>
@@ -73,6 +80,145 @@ namespace Dnn.Modules.Vendors.Components
             catch (Exception)
             {
                 return "Failed";
+            }
+        }
+
+        public int AddVendor(VendorInfo objVendor)
+        {
+            return _dataService.AddVendor(objVendor.PortalId,
+                                                     objVendor.VendorName,
+                                                     objVendor.Unit,
+                                                     objVendor.Street,
+                                                     objVendor.City,
+                                                     objVendor.Region,
+                                                     objVendor.Country,
+                                                     objVendor.PostalCode,
+                                                     objVendor.Telephone,
+                                                     objVendor.Fax,
+                                                     objVendor.Cell,
+                                                     objVendor.Email,
+                                                     objVendor.Website,
+                                                     objVendor.FirstName,
+                                                     objVendor.LastName,
+                                                     objVendor.UserName,
+                                                     objVendor.LogoFile,
+                                                     objVendor.KeyWords,
+                                                     objVendor.Authorized.ToString());
+        }
+
+        public void DeleteVendor(int VendorID)
+        {
+            _dataService.DeleteVendor(VendorID);
+            var objBanners = new BannerController();
+            objBanners.ClearBannerCache();
+        }
+
+        public void DeleteVendors()
+        {
+            DeleteVendors(Null.NullInteger);
+        }
+
+        public void DeleteVendors(int PortalID)
+        {
+            int TotalRecords = 0;
+            foreach (VendorInfo vendor in GetVendors(PortalID, true, Null.NullInteger, Null.NullInteger, ref TotalRecords))
+            {
+                if (vendor.Authorized == false)
+                {
+                    DeleteVendor(vendor.VendorId);
+                }
+            }
+            var objBanners = new BannerController();
+            objBanners.ClearBannerCache();
+        }
+
+        public void UpdateVendor(VendorInfo objVendor)
+        {
+            _dataService.UpdateVendor(objVendor.VendorId,
+                                                 objVendor.VendorName,
+                                                 objVendor.Unit,
+                                                 objVendor.Street,
+                                                 objVendor.City,
+                                                 objVendor.Region,
+                                                 objVendor.Country,
+                                                 objVendor.PostalCode,
+                                                 objVendor.Telephone,
+                                                 objVendor.Fax,
+                                                 objVendor.Cell,
+                                                 objVendor.Email,
+                                                 objVendor.Website,
+                                                 objVendor.FirstName,
+                                                 objVendor.LastName,
+                                                 objVendor.UserName,
+                                                 objVendor.LogoFile,
+                                                 objVendor.KeyWords,
+                                                 objVendor.Authorized.ToString());
+        }
+
+        public VendorInfo GetVendor(int VendorID, int PortalId)
+        {
+            return CBO.FillObject<VendorInfo>(_dataService.GetVendor(VendorID, PortalId));
+        }
+
+        public ArrayList GetVendors(int PortalId, string Filter)
+        {
+            int TotalRecords = 0;
+            return GetVendorsByName(Filter, PortalId, 0, 100000, ref TotalRecords);
+        }
+
+        public ArrayList GetVendors(int PortalId, bool UnAuthorized, int PageIndex, int PageSize, ref int TotalRecords)
+        {
+            IDataReader dr = _dataService.GetVendors(PortalId, UnAuthorized, PageIndex, PageSize);
+            ArrayList retValue = null;
+            try
+            {
+                while (dr.Read())
+                {
+                    TotalRecords = Convert.ToInt32(dr["TotalRecords"]);
+                }
+                dr.NextResult();
+                retValue = CBO.FillCollection(dr, typeof(VendorInfo));
+            }
+            finally
+            {
+                CBO.CloseDataReader(dr, true);
+            }
+            return retValue;
+        }
+
+        public ArrayList GetVendorsByEmail(string Filter, int PortalId, int Page, int PageSize, ref int TotalRecords)
+        {
+            IDataReader dr = _dataService.GetVendorsByEmail(Filter, PortalId, Page, PageSize);
+            try
+            {
+                while (dr.Read())
+                {
+                    TotalRecords = Convert.ToInt32(dr["TotalRecords"]);
+                }
+                dr.NextResult();
+                return CBO.FillCollection(dr, typeof(VendorInfo));
+            }
+            finally
+            {
+                CBO.CloseDataReader(dr, true);
+            }
+        }
+
+        public ArrayList GetVendorsByName(string Filter, int PortalId, int Page, int PageSize, ref int TotalRecords)
+        {
+            IDataReader dr = _dataService.GetVendorsByName(Filter, PortalId, Page, PageSize);
+            try
+            {
+                while (dr.Read())
+                {
+                    TotalRecords = Convert.ToInt32(dr["TotalRecords"]);
+                }
+                dr.NextResult();
+                return CBO.FillCollection(dr, typeof(VendorInfo));
+            }
+            finally
+            {
+                CBO.CloseDataReader(dr, true);
             }
         }
     }

@@ -1,6 +1,7 @@
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <%@ Control Language="C#" AutoEventWireup="false" Inherits="Dnn.Modules.Vendors.EditAffiliate" Codebehind="EditAffiliate.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
+<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web.Deprecated" %>
 <div class="dnnForm dnnEditAffiliate dnnClear" id="dnnEditAffiliate">
     <fieldset>        
         <div class="dnnFormItem">

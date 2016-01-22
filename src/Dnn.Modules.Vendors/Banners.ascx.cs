@@ -21,14 +21,13 @@
 #region Usings
 
 using System;
-
+using Dnn.Modules.Vendors.Components;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.Localization;
-using DotNetNuke.Services.Vendors;
 
 #endregion
 
