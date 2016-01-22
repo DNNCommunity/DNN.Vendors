@@ -44,21 +44,27 @@
   <Reference Include="DotNetNuke">
     <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.dll</HintPath>
+	  <Private>True</Private>
     </Reference>
     <Reference Include="DotNetNuke.Instrumentation">
       <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.Instrumentation.dll</HintPath>
+	  <Private>True</Private>
     </Reference>
     <Reference Include="DotNetNuke.Web">
       <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.Web.dll</HintPath>
+	  <Private>True</Private>
     </Reference>
     <Reference Include="DotNetNuke.Web.Deprecated">
       <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.Web.Deprecated.dll</HintPath>
+	  <Private>True</Private>
     </Reference>
     <Reference Include="DotNetNuke.WebUtility">
       <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.WebUtility.dll</HintPath>
+	  <Private>True</Private>
     </Reference>
     <Reference Include="DotNetNuke.WebUtility">
       <HintPath>packages\DotNetNuke.Bundle.8.0.1.99\lib\DotNetNuke.WebControls.dll</HintPath>
+	  <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
