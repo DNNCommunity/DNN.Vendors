@@ -1,4 +1,6 @@
-﻿input[type="text"].dnnVendorsSearchFilter { width: 25%; }
+﻿input[type="text"].dnnVendorsSearchFilter {
+     width: 25%;
+}
 
 .dnnVendors .vLetterSearch li {
     display: inline;
@@ -34,6 +36,18 @@
     width: 100% !important;
 }
 
-.dnnAddressCountry .dnnLeft {width: 47%}
+.dnnAddressCountry .dnnLeft {
+    width: 47%
+}
 
-.dnnAddressCountry .dnnLeft select {width: 100%}
+.dnnAddressCountry .dnnLeft select {
+    width: 100%
+}
+
+.dnnBannerOptions {
+    width:100%;
+}
+
+.dnnBannerOptions input[type=text] {
+    width:30%;
+}

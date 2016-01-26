@@ -60,18 +60,18 @@
     <Reference Include="Microsoft.ApplicationBlocks.Data">
       <HintPath>packages\DotNetNuke.Core.8.0.0.809\lib\net40\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <Private>True</Private>
-    </Reference>	
+    </Reference>
     <Reference Include="DotNetNuke.Web.Deprecated">
       <HintPath>Externals\DotNetNuke.Web.Deprecated.dll</HintPath>
-	  <Private>True</Private>
+      <Private>True</Private>
     </Reference>
-	<Reference Include="DotNetNuke.WebControls">
+    <Reference Include="DotNetNuke.WebControls">
       <HintPath>Externals\DotNetNuke.WebControls.dll</HintPath>
-	  <Private>True</Private>
-    </Reference>    
-	<Reference Include="Telerik.Web.UI">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Web.UI">
       <HintPath>Externals\Telerik.Web.UI.dll</HintPath>
-	  <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
@@ -99,6 +99,20 @@
     <Compile Include="Affiliates.ascx.designer.cs">
       <DependentUpon>affiliates.ascx</DependentUpon>
     </Compile>
+    <Compile Include="BannerClickThrough.aspx.cs">
+      <DependentUpon>BannerClickThrough.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BannerClickThrough.aspx.designer.cs">
+      <DependentUpon>BannerClickThrough.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BannerOptions.ascx.cs">
+      <DependentUpon>banneroptions.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BannerOptions.ascx.designer.cs">
+      <DependentUpon>banneroptions.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Banners.ascx.cs">
       <DependentUpon>banners.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -118,6 +132,13 @@
     <Compile Include="Components\VendorsController.cs" />
     <Compile Include="Data\DataService.cs" />
     <Compile Include="Data\IDataService.cs" />
+    <Compile Include="DisplayBanners.ascx.cs">
+      <DependentUpon>displaybanners.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DisplayBanners.ascx.designer.cs">
+      <DependentUpon>displaybanners.ascx</DependentUpon>
+    </Compile>
     <Compile Include="EditAffiliate.ascx.cs">
       <DependentUpon>editaffiliate.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -152,13 +173,17 @@
     <Content Include="08.00.00.txt" />
     <Content Include="affiliates.ascx" />
     <Content Include="App_LocalResources\Vendors.ascx.resx" />
+    <Content Include="BannerClickThrough.aspx" />
+    <Content Include="banneroptions.ascx" />
     <Content Include="banners.ascx" />
+    <Content Include="banners.png" />
+    <Content Include="displaybanners.ascx" />
     <Content Include="editaffiliate.ascx" />
     <Content Include="editbanner.ascx" />
     <Content Include="editvendors.ascx" />
     <Content Include="Externals\DotNetNuke.Web.Deprecated.dll" />
     <Content Include="Externals\DotNetNuke.WebControls.dll" />
-	<Content Include="Externals\Telerik.Web.UI.dll" />
+    <Content Include="Externals\Telerik.Web.UI.dll" />
     <Content Include="license.txt" />
     <Content Include="module.css" />
     <Content Include="Vendors.ascx" />
@@ -185,6 +210,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\BannerOptions.ascx.resx" />
+    <Content Include="App_LocalResources\DisplayBanners.ascx.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
