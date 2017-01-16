@@ -17,7 +17,7 @@
     <CreateItem Include="Components\**\*.dll">
       <Output TaskParameter="Include" ItemName="ComponentReferences" />
     </CreateItem>
-    <CreateItem Include="*.asmx;*.ascx;*.css;*.xsl;*.svc;*.xml;*.gif;*.png">
+    <CreateItem Include="*.asmx;*.ascx;*.aspx;*.css;*.xsl;*.svc;*.xml;*.gif;*.png">
       <Output TaskParameter="Include" ItemName="PackageSourceFiles" />
     </CreateItem>
     <CreateItem Include="*.config">

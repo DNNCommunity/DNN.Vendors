@@ -7,7 +7,7 @@
       <SourceFiles Include="*.css;*.htm;*.html;*.xsl;*.png;*.gif" />
       <ConfigFiles Include="*.config" Exclude="web.config;packages.config"/>
       <RootConfig Include="*eb.config" />
-      <RootViews Include="*.ascx;*.asmx;*.ashx;" />
+      <RootViews Include="*.ascx;*.asmx;*.ashx;*.aspx;" />
       <Services Include="*.svc" />
       <Views Include="Views/*.ascx;" />
       <MVCViews Include="Views/*/*.cshtml;Views/*.cshtml"/>
