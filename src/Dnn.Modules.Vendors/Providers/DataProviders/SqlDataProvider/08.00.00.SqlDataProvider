@@ -1,4 +1,140 @@
-﻿IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddAffiliate]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+﻿-- Create tables
+
+IF NOT EXISTS (select * from sys.objects where object_id = object_id(N'{databaseOwner}[{objectQualifier}Vendors]') and type in (N'U'))
+BEGIN
+
+    CREATE TABLE {databaseOwner}[{objectQualifier}Vendors] (
+	    [VendorId] [int] IDENTITY(1,1) NOT NULL,
+	    [VendorName] [nvarchar](50) NOT NULL,
+	    [Street] [nvarchar](50) NULL,
+	    [City] [nvarchar](50) NULL,
+	    [Region] [nvarchar](50) NULL,
+	    [Country] [nvarchar](50) NULL,
+	    [PostalCode] [nvarchar](50) NULL,
+	    [Telephone] [nvarchar](50) NULL,
+	    [PortalId] [int] NULL,
+	    [Fax] [nvarchar](50) NULL,
+	    [Email] [nvarchar](50) NULL,
+	    [Website] [nvarchar](100) NULL,
+	    [ClickThroughs] [int] NOT NULL,
+	    [Views] [int] NOT NULL,
+	    [CreatedByUser] [nvarchar](100) NULL,
+	    [CreatedDate] [datetime] NULL,
+	    [LogoFile] [nvarchar](100) NULL,
+	    [KeyWords] [ntext] NULL,
+	    [Unit] [nvarchar](50) NULL,
+	    [Authorized] [bit] NOT NULL,
+	    [FirstName] [nvarchar](50) NULL,
+	    [LastName] [nvarchar](50) NULL,
+	    [Cell] [varchar](50) NULL,
+        CONSTRAINT [PK_{objectQualifier}Vendor] PRIMARY KEY ([VendorId]),
+        CONSTRAINT [FK_{objectQualifier}Vendor_Portals] FOREIGN KEY ([PortalId]) 
+            REFERENCES {databaseOwner}[{objectQualifier}Portals] ([PortalID]) ON DELETE CASCADE,
+        CONSTRAINT [IX_{objectQualifier}Vendors] UNIQUE NONCLUSTERED ([PortalId], [VendorName])
+    )
+    
+    ALTER TABLE {databaseOwner}[{objectQualifier}Vendors]
+        ADD CONSTRAINT [DF_{objectQualifier}Vendors_ClickThroughs] DEFAULT ((0)) FOR [ClickThroughs]
+    
+    ALTER TABLE {databaseOwner}[{objectQualifier}Vendors]
+        ADD CONSTRAINT [DF_{objectQualifier}Vendors_Views] DEFAULT ((0)) FOR [Views]
+    
+    ALTER TABLE {databaseOwner}[{objectQualifier}Vendors]
+        ADD CONSTRAINT [DF_{objectQualifier}Vendors_Authorized] DEFAULT ((1)) FOR [Authorized]
+
+END
+GO
+
+IF NOT EXISTS (select * from sys.objects where object_id = object_id(N'{databaseOwner}[{objectQualifier}Affiliates]') and type in (N'U'))
+    CREATE TABLE {databaseOwner}[{objectQualifier}Affiliates] (
+	    [AffiliateId] [int] IDENTITY(1,1) NOT NULL,
+	    [VendorId] [int] NULL,
+	    [StartDate] [datetime] NULL,
+	    [EndDate] [datetime] NULL,
+	    [CPC] [float] NOT NULL,
+	    [Clicks] [int] NOT NULL,
+	    [CPA] [float] NOT NULL,
+	    [Acquisitions] [int] NOT NULL,
+        CONSTRAINT [PK_{objectQualifier}Affiliates] PRIMARY KEY ([AffiliateId]),
+        CONSTRAINT [FK_{objectQualifier}Affiliates_Vendors] FOREIGN KEY([VendorId]) 
+            REFERENCES {databaseOwner}[{objectQualifier}Vendors] ([VendorId]) ON DELETE CASCADE
+    )
+GO
+
+IF NOT EXISTS (select * from sys.objects where object_id = object_id(N'{databaseOwner}[{objectQualifier}Banners]') and type in (N'U'))
+BEGIN
+
+    CREATE TABLE {databaseOwner}[{objectQualifier}Banners] (
+	    [BannerId] [int] IDENTITY(1,1) NOT NULL,
+	    [VendorId] [int] NOT NULL,
+	    [ImageFile] [nvarchar](100) NULL,
+	    [BannerName] [nvarchar](100) NOT NULL,
+	    [Impressions] [int] NOT NULL,
+	    [CPM] [float] NOT NULL,
+	    [Views] [int] NOT NULL,
+	    [ClickThroughs] [int] NOT NULL,
+	    [StartDate] [datetime] NULL,
+	    [EndDate] [datetime] NULL,
+	    [CreatedByUser] [nvarchar](100) NOT NULL,
+	    [CreatedDate] [datetime] NOT NULL,
+	    [BannerTypeId] [int] NULL,
+	    [Description] [nvarchar](2000) NULL,
+	    [GroupName] [nvarchar](100) NULL,
+	    [Criteria] [bit] NOT NULL,
+	    [URL] [nvarchar](255) NULL,
+	    [Width] [int] NOT NULL,
+	    [Height] [int] NOT NULL,
+        CONSTRAINT [PK_{objectQualifier}Banner] PRIMARY KEY ([BannerId]),
+        CONSTRAINT [FK_{objectQualifier}Banner_Vendor] FOREIGN KEY ([VendorId])
+            REFERENCES {databaseOwner}[{objectQualifier}Vendors] ([VendorId]) ON DELETE CASCADE
+    )
+     
+    ALTER TABLE {databaseOwner}[{objectQualifier}Banners]
+        ADD CONSTRAINT [DF_{objectQualifier}Banners_Views] DEFAULT ((0)) FOR [Views]
+    
+    ALTER TABLE {databaseOwner}[{objectQualifier}Banners]
+        ADD CONSTRAINT [DF_{objectQualifier}Banners_ClickThroughs] DEFAULT ((0)) FOR [ClickThroughs]
+    
+    ALTER TABLE {databaseOwner}[{objectQualifier}Banners]
+        ADD  CONSTRAINT [DF_{objectQualifier}Banners_Criteria] DEFAULT ((1)) FOR [Criteria]
+    
+    ALTER TABLE {databaseOwner}[{objectQualifier}Banners]
+        ADD CONSTRAINT [DF_{objectQualifier}Banners_Width] DEFAULT ((0)) FOR [Width]
+    
+    ALTER TABLE {databaseOwner}[{objectQualifier}Banners]
+        ADD CONSTRAINT [DF_{objectQualifier}Banners_Height] DEFAULT ((0)) FOR [Height]
+
+END
+GO
+
+IF NOT EXISTS (select * from sys.objects where object_id = object_id(N'{databaseOwner}[{objectQualifier}Classification]') and type in (N'U'))
+    CREATE TABLE {databaseOwner}[{objectQualifier}Classification] (
+	    [ClassificationId] [int] IDENTITY(1,1) NOT NULL,
+	    [ClassificationName] [nvarchar](200) NOT NULL,
+	    [ParentId] [int] NULL,
+        CONSTRAINT [PK_{objectQualifier}VendorCategory] PRIMARY KEY ([ClassificationId]),
+        CONSTRAINT [FK_{objectQualifier}Classification_Classification] FOREIGN KEY([ParentId])
+            REFERENCES {databaseOwner}[{objectQualifier}Classification] ([ClassificationId])
+    )
+GO
+
+IF NOT EXISTS (select * from sys.objects where object_id = object_id(N'{databaseOwner}[{objectQualifier}VendorClassification]') and type in (N'U'))
+    CREATE TABLE {databaseOwner}[{objectQualifier}VendorClassification] (
+	    [VendorClassificationId] [int] IDENTITY(1,1) NOT NULL,
+	    [VendorId] [int] NOT NULL,
+	    [ClassificationId] [int] NOT NULL,
+        CONSTRAINT [PK_{objectQualifier}VendorClassification] PRIMARY KEY ([VendorClassificationId]),
+        CONSTRAINT [FK_{objectQualifier}VendorClassification_Classification] FOREIGN KEY ([ClassificationId])
+            REFERENCES {databaseOwner}[{objectQualifier}Classification] ([ClassificationId]) ON DELETE CASCADE,
+        CONSTRAINT [FK_{objectQualifier}VendorClassification_Vendors] FOREIGN KEY ([VendorId])
+            REFERENCES {databaseOwner}[{objectQualifier}Vendors] ([VendorId]) ON DELETE CASCADE,
+        CONSTRAINT [IX_{objectQualifier}VendorClassification] UNIQUE NONCLUSTERED ([VendorId], [ClassificationId])
+    )
+GO
+
+-- Create stored procedures
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddAffiliate]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
   DROP PROCEDURE {databaseOwner}{objectQualifier}AddAffiliate
 GO
 

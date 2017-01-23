@@ -1,4 +1,6 @@
-﻿IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddAffiliate]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+﻿-- Drop stored procedures
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddAffiliate]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
   DROP PROCEDURE {databaseOwner}{objectQualifier}AddAffiliate
 GO
 
@@ -96,4 +98,26 @@ GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}[{objectQualifier}UpdateBannerViews]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
 	drop procedure {databaseOwner}[{objectQualifier}UpdateBannerViews]
+GO
+
+-- Drop tables
+
+IF EXISTS (select * from sys.objects where object_id = object_id(N'{databaseOwner}[{objectQualifier}VendorClassification]') and type in (N'U'))
+    DROP TABLE {databaseOwner}[{objectQualifier}VendorClassification]
+GO
+
+IF EXISTS (select * from sys.objects where object_id = object_id(N'{databaseOwner}[{objectQualifier}Classification]') and type in (N'U'))
+    DROP TABLE {databaseOwner}[{objectQualifier}Classification]
+GO
+
+IF EXISTS (select * from sys.objects where object_id = object_id(N'{databaseOwner}[{objectQualifier}Banners]') and type in (N'U'))
+    DROP TABLE {databaseOwner}[{objectQualifier}Banners]
+GO
+
+IF EXISTS (select * from sys.objects where object_id = object_id(N'{databaseOwner}[{objectQualifier}Affiliates]') and type in (N'U'))
+    DROP TABLE {databaseOwner}[{objectQualifier}Affiliates]
+GO
+
+IF EXISTS (select * from sys.objects where object_id = object_id(N'{databaseOwner}[{objectQualifier}Vendors]') and type in (N'U'))
+    DROP TABLE {databaseOwner}[{objectQualifier}Vendors]
 GO
