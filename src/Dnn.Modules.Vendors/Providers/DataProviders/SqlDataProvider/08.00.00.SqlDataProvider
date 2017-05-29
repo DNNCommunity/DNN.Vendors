@@ -1,4 +1,86 @@
-﻿IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddAffiliate]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
+﻿IF NOT EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}{objectQualifier}Vendors') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	BEGIN
+        CREATE TABLE {databaseOwner}[{objectQualifier}Vendors]
+        (
+            [VendorId] [int] NOT NULL IDENTITY(1, 1),
+            [VendorName] [nvarchar] (50)   NOT NULL,
+            [Street] [nvarchar] (50)   NULL,
+            [City] [nvarchar] (50)   NULL,
+            [Region] [nvarchar] (50)   NULL,
+            [Country] [nvarchar] (50)   NULL,
+            [PostalCode] [nvarchar] (50)   NULL,
+            [Telephone] [nvarchar] (50)   NULL,
+            [PortalId] [int] NULL,
+            [Fax] [nvarchar] (50)   NULL,
+            [Email] [nvarchar] (50)   NULL,
+            [Website] [nvarchar] (100)   NULL,
+            [ClickThroughs] [int] NOT NULL CONSTRAINT [DF_{objectQualifier}Vendors_ClickThroughs] DEFAULT ((0)),
+            [Views] [int] NOT NULL CONSTRAINT [DF_{objectQualifier}Vendors_Views] DEFAULT ((0)),
+            [CreatedByUser] [nvarchar] (100)   NULL,
+            [CreatedDate] [datetime] NULL,
+            [LogoFile] [nvarchar] (100)   NULL,
+            [KeyWords] [ntext]   NULL,
+            [Unit] [nvarchar] (50)   NULL,
+            [Authorized] [bit] NOT NULL CONSTRAINT [DF_{objectQualifier}Vendors_Authorized] DEFAULT ((1)),
+            [FirstName] [nvarchar] (50)   NULL,
+            [LastName] [nvarchar] (50)   NULL,
+            [Cell] [varchar] (50)   NULL
+        )
+
+        ALTER TABLE {databaseOwner}[{objectQualifier}Vendors] ADD CONSTRAINT [PK_{objectQualifier}Vendor] PRIMARY KEY CLUSTERED  ([VendorId])
+    END
+GO
+
+IF NOT EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}{objectQualifier}Affiliates') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	BEGIN
+        CREATE TABLE {databaseOwner}[{objectQualifier}Affiliates]
+        (
+            [AffiliateId] [int] NOT NULL IDENTITY(1, 1),
+            [VendorId] [int] NULL,
+            [StartDate] [datetime] NULL,
+            [EndDate] [datetime] NULL,
+            [CPC] [float] NOT NULL,
+            [Clicks] [int] NOT NULL,
+            [CPA] [float] NOT NULL,
+            [Acquisitions] [int] NOT NULL
+        )
+
+        ALTER TABLE {databaseOwner}[{objectQualifier}Affiliates] ADD CONSTRAINT [PK_{objectQualifier}Affiliates] PRIMARY KEY CLUSTERED  ([AffiliateId])
+    END
+GO
+
+IF NOT EXISTS (select * from dbo.sysobjects where id = object_id(N'{databaseOwner}{objectQualifier}Banners') and OBJECTPROPERTY(id, N'IsTable') = 1)
+	BEGIN
+        CREATE TABLE {databaseOwner}[{objectQualifier}Banners]
+        (
+            [BannerId] [int] NOT NULL IDENTITY(1, 1),
+            [VendorId] [int] NOT NULL,
+            [ImageFile] [nvarchar] (100)   NULL,
+            [BannerName] [nvarchar] (100)   NOT NULL,
+            [Impressions] [int] NOT NULL,
+            [CPM] [float] NOT NULL,
+            [Views] [int] NOT NULL CONSTRAINT [DF_{objectQualifier}Banners_Views] DEFAULT ((0)),
+            [ClickThroughs] [int] NOT NULL CONSTRAINT [DF_{objectQualifier}Banners_ClickThroughs] DEFAULT ((0)),
+            [StartDate] [datetime] NULL,
+            [EndDate] [datetime] NULL,
+            [CreatedByUser] [nvarchar] (100)   NOT NULL,
+            [CreatedDate] [datetime] NOT NULL,
+            [BannerTypeId] [int] NULL,
+            [Description] [nvarchar] (2000)   NULL,
+            [GroupName] [nvarchar] (100)   NULL,
+            [Criteria] [bit] NOT NULL CONSTRAINT [DF_{objectQualifier}Banners_Criteria] DEFAULT ((1)),
+            [URL] [nvarchar] (255)   NULL,
+            [Width] [int] NOT NULL CONSTRAINT [DF_{objectQualifier}Banners_Width] DEFAULT ((0)),
+            [Height] [int] NOT NULL CONSTRAINT [DF_{objectQualifier}Banners_Height] DEFAULT ((0))
+        )
+
+        ALTER TABLE {databaseOwner}[{objectQualifier}Banners] ADD CONSTRAINT [PK_{objectQualifier}Banner] PRIMARY KEY CLUSTERED  ([BannerId])
+        CREATE NONCLUSTERED INDEX [IX_{objectQualifier}Banners_1] ON {databaseOwner}[{objectQualifier}Banners] ([VendorId])
+        CREATE NONCLUSTERED INDEX [IX_{objectQualifier}Banners] ON {databaseOwner}[{objectQualifier}Banners] ([BannerTypeId])
+    END
+GO
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id(N'{databaseOwner}[{objectQualifier}AddAffiliate]') AND OBJECTPROPERTY(id, N'IsPROCEDURE') = 1)
   DROP PROCEDURE {databaseOwner}{objectQualifier}AddAffiliate
 GO
 
