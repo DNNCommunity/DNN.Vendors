@@ -39,14 +39,14 @@ namespace Dnn.Modules.Vendors.Components
 {
     public class BannerController
     {
-		#region "Private Members"
+        #region "Private Members"
 
         private IDataService _dataService = new DataService();
-        private string BannerClickThroughPage = "/DesktopModules/Admin/Banners/BannerClickThrough.aspx";
+        private string BannerClickThroughPage = "/DesktopModules/Vendors/BannerClickThrough.aspx";
+        //private string BannerClickThroughPage = "/DesktopModules/Admin/Banners/BannerClickThrough.aspx";
+        #endregion
 
-		#endregion
-
-		#region "Private Methods"
+        #region "Private Methods"
 
         private string FormatImage(string File, int Width, int Height, string BannerName, string Description)
         {
@@ -89,11 +89,11 @@ namespace Dnn.Modules.Vendors.Components
             return Flash;
         }
 
-		#endregion
+        #endregion
 
-		#region "Public Methods"
+        #region "Public Methods"
 
-		public bool IsBannerActive(BannerInfo objBanner)
+        public bool IsBannerActive(BannerInfo objBanner)
         {
             bool blnValid = true;
 
@@ -124,9 +124,9 @@ namespace Dnn.Modules.Vendors.Components
 
         private object LoadBannersCallback(CacheItemArgs cacheItemArgs)
         {
-            var PortalId = (int) cacheItemArgs.ParamList[0];
-            var BannerTypeId = (int) cacheItemArgs.ParamList[1];
-            var GroupName = (string) cacheItemArgs.ParamList[2];
+            var PortalId = (int)cacheItemArgs.ParamList[0];
+            var BannerTypeId = (int)cacheItemArgs.ParamList[1];
+            var GroupName = (string)cacheItemArgs.ParamList[2];
 
             //get list of all banners
             List<BannerInfo> FullBannerList = CBO.FillCollection<BannerInfo>(_dataService.FindBanners(PortalId, BannerTypeId, GroupName));
@@ -165,7 +165,7 @@ namespace Dnn.Modules.Vendors.Components
 
         public void ClearBannerCache()
         {
-			//Clear all cached Banners collections
+            //Clear all cached Banners collections
             DataCache.ClearCache("Banners:");
         }
 
@@ -174,11 +174,8 @@ namespace Dnn.Modules.Vendors.Components
             _dataService.DeleteBanner(BannerId);
             ClearBannerCache();
         }
-
-        public string FormatBanner(int VendorId, int BannerId, int BannerTypeId, string BannerName, string ImageFile, string Description, string URL, int Width, int Height, string BannerSource,
-                                   string HomeDirectory, string BannerClickthroughUrl)
+        public string FormatURL(int VendorId, int BannerId, string URL, string BannerClickthroughUrl)
         {
-            string strBanner = "";
             string strWindow = "_blank";
             if (Globals.GetURLType(URL) == TabType.Tab)
             {
@@ -200,11 +197,23 @@ namespace Dnn.Modules.Vendors.Components
             {
                 strURL = URL;
             }
-            strURL = HttpUtility.HtmlEncode(strURL);
+            return strURL;
+        }
+        public string FormatBanner(int VendorId, int BannerId, int BannerTypeId, string BannerName, string ImageFile, string Description, string URL, int Width, int Height, string BannerSource,
+                                   string HomeDirectory, string BannerClickthroughUrl)
+        {
+            string strWindow = "_blank";
+            if (Globals.GetURLType(URL) == TabType.Tab)
+            {
+                strWindow = "_self";
+            }
+            string strBanner = "";
+            string strURL = "";
+            strURL = HttpUtility.HtmlEncode(FormatURL(VendorId, BannerId, URL, BannerClickthroughUrl));
 
             switch (BannerTypeId)
             {
-                case (int) BannerType.Text:
+                case (int)BannerType.Text:
                     strBanner += "<a href=\"" + strURL + "\" class=\"NormalBold\" target=\"" + strWindow + "\" rel=\"nofollow\"><u>" + BannerName + "</u></a><br />";
                     strBanner += "<span class=\"Normal\">" + Description + "</span><br />";
                     if (!String.IsNullOrEmpty(ImageFile))
@@ -217,7 +226,7 @@ namespace Dnn.Modules.Vendors.Components
                     }
                     strBanner += "<a href=\"" + strURL + "\" class=\"NormalRed\" target=\"" + strWindow + "\" rel=\"nofollow\">" + URL + "</a>";
                     break;
-                case (int) BannerType.Script:
+                case (int)BannerType.Script:
                     strBanner += Description;
                     break;
                 default:
@@ -295,14 +304,14 @@ namespace Dnn.Modules.Vendors.Components
             {
                 GroupName = Null.NullString;
             }
-			
+
             //set cache key
             string cacheKey = string.Format(DataCache.BannersCacheKey, PortalId, BannerTypeId, GroupName);
 
             //get list of active banners
             var bannersList = CBO.GetCachedObject<List<BannerInfo>>(new CacheItemArgs(cacheKey, DataCache.BannersCacheTimeOut, DataCache.BannersCachePriority, PortalId, BannerTypeId, GroupName),
                                                                     LoadBannersCallback);
-																	
+
             //create return collection
             var arReturnBanners = new ArrayList(Banners);
 
@@ -312,7 +321,7 @@ namespace Dnn.Modules.Vendors.Components
                 {
                     Banners = bannersList.Count;
                 }
-				
+
                 //set Random start index based on the list of banners
                 int intIndex = new Random().Next(0, bannersList.Count);
                 //set counter
@@ -320,13 +329,13 @@ namespace Dnn.Modules.Vendors.Components
 
                 while (intCounter <= bannersList.Count && arReturnBanners.Count != Banners)
                 {
-					//manage the rotation for the circular collection
+                    //manage the rotation for the circular collection
                     intIndex += 1;
                     if (intIndex > (bannersList.Count - 1))
                     {
                         intIndex = 0;
                     }
-					
+
                     //get the banner object
                     BannerInfo objBanner = bannersList[intIndex];
 
@@ -381,11 +390,11 @@ namespace Dnn.Modules.Vendors.Components
             _dataService.UpdateBannerClickThrough(BannerId, VendorId);
         }
 
-		#endregion
+        #endregion
 
-		#region "Obsolete methods"
+        #region "Obsolete methods"
 
-		[Obsolete("Deprecated in DNN 5.6.2. Use BannerController.GetBanner(Int32)")]
+        [Obsolete("Deprecated in DNN 5.6.2. Use BannerController.GetBanner(Int32)")]
         public BannerInfo GetBanner(int BannerId, int VendorId, int PortalId)
         {
             return GetBanner(BannerId);

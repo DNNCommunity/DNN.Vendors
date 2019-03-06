@@ -64,13 +64,14 @@ namespace Dnn.Modules.Vendors
 
             cmdUpdate.Click += cmdUpdate_Click;
             cmdCancel.Click += cmdCancel_Click;
-            DNNTxtBannerGroup.PopulateOnDemand += DNNTxtBannerGroup_PopulateOnDemand;
+            //Deleted DNNTextSuggest
+            //DNNTxtBannerGroup.PopulateOnDemand += DNNTxtBannerGroup_PopulateOnDemand;
 
             try
             {
                 if (!Page.IsPostBack)
                 {
-					//Obtain banner information from the Banners table and bind to the list control
+                    //Obtain banner information from the Banners table and bind to the list control
                     var objBannerTypes = new BannerTypeController();
 
                     cboType.DataSource = objBannerTypes.GetBannerTypes();
@@ -79,6 +80,32 @@ namespace Dnn.Modules.Vendors
 
                     if (ModuleId > 0)
                     {
+                        if (optDisplay.Items.FindByValue(Convert.ToString(Settings["bannerdisplay"])) != null)
+                        {
+                            optDisplay.Items.FindByValue(Convert.ToString(Settings["bannerdisplay"])).Selected = true;
+                        }
+                        else
+                        {
+                            optDisplay.Items.FindByValue("L").Selected = true;
+                        }
+                        switch (optDisplay.SelectedItem.Value)
+                        {
+                            case "T":
+                                pnlLegacy.Visible = false;
+                                pnlTemplate.Visible = true;
+                                break;
+
+                            case "L":
+                                pnlLegacy.Visible = true;
+                                pnlTemplate.Visible = false;
+                                break;
+
+                            default:
+                                pnlLegacy.Visible = true;
+                                pnlTemplate.Visible = false;
+                                break;
+
+                        }
                         if (optSource.Items.FindByValue(Convert.ToString(Settings["bannersource"])) != null)
                         {
                             optSource.Items.FindByValue(Convert.ToString(Settings["bannersource"])).Selected = true;
@@ -127,6 +154,32 @@ namespace Dnn.Modules.Vendors
                         {
                             txtPadding.Text = "4";
                         }
+                        if (!String.IsNullOrEmpty(Convert.ToString(Settings["bannerheader"])))
+                        {
+                            txtHeader.Text = Convert.ToString(Settings["bannerheader"]);
+                        }
+                        else
+                        {
+                            txtHeader.Text = "<div>";
+                        }
+                        if (!String.IsNullOrEmpty(Convert.ToString(Settings["bannercontent"])))
+                        {
+                            txtContent.Text = Convert.ToString(Settings["bannercontent"]);
+                        }
+                        else
+                        {
+                            txtContent.Text = @"<a href=[LINKIMAGE] target='' rel='nofollow'> 
+                                < img src = [URLIMAGE] alt = [ALTERNATE] />
+                                </ a > ";
+                        }
+                        if (!String.IsNullOrEmpty(Convert.ToString(Settings["bannerfooter"])))
+                        {
+                            txtFooter.Text = Convert.ToString(Settings["bannerfooter"]);
+                        }
+                        else
+                        {
+                            txtFooter.Text = "</div>";
+                        }
                         txtBorderColor.Text = Convert.ToString(Settings["bordercolor"]);
                         txtRowHeight.Text = Convert.ToString(Settings["rowheight"]);
                         txtColWidth.Text = Convert.ToString(Settings["colwidth"]);
@@ -146,7 +199,12 @@ namespace Dnn.Modules.Vendors
             {
                 if (Page.IsValid)
                 {
-					//Update settings in the database
+                    //Update settings in the database
+                    if (optDisplay.SelectedItem != null)
+                    {
+                        ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannerdisplay", optDisplay.SelectedItem.Value);
+                    }
+
                     if (optSource.SelectedItem != null)
                     {
                         ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannersource", optSource.SelectedItem.Value);
@@ -160,6 +218,10 @@ namespace Dnn.Modules.Vendors
                     {
                         ModuleController.Instance.UpdateModuleSetting(ModuleId, "orientation", optOrientation.SelectedItem.Value);
                     }
+
+                    ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannerheader", txtHeader.Text);
+                    ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannercontent", txtContent.Text);
+                    ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannerFooter", txtFooter.Text);
                     ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannercount", txtCount.Text);
                     ModuleController.Instance.UpdateModuleSetting(ModuleId, "border", txtBorder.Text);
                     ModuleController.Instance.UpdateModuleSetting(ModuleId, "bordercolor", txtBorderColor.Text);
@@ -217,6 +279,28 @@ namespace Dnn.Modules.Vendors
                 objNode = new DNNNode(d["GroupName"].ToString());
                 objNode.ID = e.Nodes.Count.ToString();
                 e.Nodes.Add(objNode);
+            }
+        }
+
+        protected void optDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (optDisplay.SelectedItem.Value)
+            {
+                case "T":
+                    pnlLegacy.Visible = false;
+                    pnlTemplate.Visible = true;
+                    break;
+
+                case "L":
+                    pnlLegacy.Visible = true;
+                    pnlTemplate.Visible = false;
+                    break;
+
+                default:
+                    pnlLegacy.Visible = true;
+                    pnlTemplate.Visible = false;
+                    break;
+
             }
         }
     }
