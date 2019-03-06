@@ -7,8 +7,8 @@
     <div class="dnnFormItem">
         <dnn:label id="plDisplay" runat="server" controlname="optSource" suffix=":" />
         <asp:RadioButtonList ID="optDisplay" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow" CssClass="dnnFormRadioButtons" OnSelectedIndexChanged="optDisplay_SelectedIndexChanged" AutoPostBack="True">
-            <asp:ListItem Value="T" resourcekey="Template">Host</asp:ListItem>
-            <asp:ListItem Value="L" resourcekey="Legacy">Site</asp:ListItem>
+            <asp:ListItem Value="T" resourcekey="Template">Template</asp:ListItem>
+            <asp:ListItem Value="L" resourcekey="Legacy">Legacy</asp:ListItem>
         </asp:RadioButtonList>
     </div>
     <div class="dnnFormItem">
