@@ -125,7 +125,7 @@
         </component>
       </components>
     </package>
-    <package name="DotNetNuke.Banners" type="Module" version="08.00.00">
+    <package name="DotNetNuke.Banners" type="Module" version="08.01.00">
       <friendlyName>Banners</friendlyName>
       <description>Banner advertising is managed through the Vendors module in the Admin tab. You can select the number of banners to display as well as the banner type.</description>
       <iconFile>DesktopModules/Vendors/banners.png</iconFile>
