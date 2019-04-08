@@ -157,6 +157,42 @@ namespace Dnn.Modules.Vendors {
         protected global::System.Web.UI.WebControls.TextBox txtContent;
         
         /// <summary>
+        /// Control lblTokens.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl lblTokens;
+        
+        /// <summary>
+        /// Control lblTokensText.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTokensText;
+        
+        /// <summary>
+        /// Control plContentText.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl plContentText;
+        
+        /// <summary>
+        /// Control txtContentText.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtContentText;
+        
+        /// <summary>
         /// Control plFooter.
         /// </summary>
         /// <remarks>

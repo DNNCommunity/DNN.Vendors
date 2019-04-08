@@ -176,11 +176,7 @@ namespace Dnn.Modules.Vendors.Components
         }
         public string FormatURL(int VendorId, int BannerId, string URL, string BannerClickthroughUrl)
         {
-            string strWindow = "_blank";
-            if (Globals.GetURLType(URL) == TabType.Tab)
-            {
-                strWindow = "_self";
-            }
+            
             string strURL = "";
             if (BannerId != -1)
             {

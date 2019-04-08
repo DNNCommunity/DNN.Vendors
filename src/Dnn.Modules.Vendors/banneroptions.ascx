@@ -39,6 +39,16 @@
         <div class="dnnFormItem">
             <dnn:label id="plContent" runat="server" controlname="txtContent" suffix=":" />
             <asp:TextBox ID="txtContent" runat="server" Rows="10" TextMode="MultiLine"></asp:TextBox>
+           
+        </div>
+        <div class="dnnFormItem">
+             <dnn:label ID="lblTokens" runat="server" Text="Tokens:"></dnn:label>
+            <asp:Label ID="lblTokensText" runat="server" Text=" [LINKBANNER], [URLIMAGE], [BANNERNAME], [ALTERNATE]"></asp:Label>
+            </div>
+        <div class="dnnFormItem">
+            <dnn:label id="plContentText" runat="server" controlname="txtContentText" suffix=":" />
+            <asp:TextBox ID="txtContentText" runat="server" Rows="10" TextMode="MultiLine"></asp:TextBox>
+            
         </div>
         <div class="dnnFormItem">
             <dnn:label id="plFooter" runat="server" controlname="txtFooter" suffix=":" />

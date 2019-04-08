@@ -1,6 +1,6 @@
 ﻿<dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="DotNetNuke.Vendors" type="Module" version="08.00.00">
+    <package name="DotNetNuke.Vendors" type="Module" version="08.01.00">
       <friendlyName>Vendors</friendlyName>
       <description>Administrators can manage the Vendors and Banners associated to the site. This module allows you to add a new vendor, modify an existing vendor, and delete a vendor.</description>
       <iconFile>~/Icons/Sigma/Vendors_32X32_Standard.png</iconFile>

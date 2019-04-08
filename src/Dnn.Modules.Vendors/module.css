@@ -51,3 +51,6 @@
 .dnnBannerOptions input[type=text] {
     width:30%;
 }
+#dnnEditBanner tr td img {
+    max-width: 95%;
+}

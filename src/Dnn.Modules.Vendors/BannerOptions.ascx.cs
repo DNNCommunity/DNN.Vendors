@@ -168,9 +168,15 @@ namespace Dnn.Modules.Vendors
                         }
                         else
                         {
-                            txtContent.Text = @"<a href=[LINKIMAGE] target='' rel='nofollow'> 
-                                < img src = [URLIMAGE] alt = [ALTERNATE] />
-                                </ a > ";
+                            txtContent.Text = "<a href = [LINKBANNER] target = '_blank' rel = 'nofollow' ><img src = [URLIMAGE] alt = [ALTERNATE] /></ a > ";
+                        }
+                        if (!String.IsNullOrEmpty(Convert.ToString(Settings["bannertext"])))
+                        {
+                            txtContentText.Text = Convert.ToString(Settings["bannertext"]);
+                        }
+                        else
+                        {
+                            txtContentText.Text = "<a href=[LINKBANNER] target='_blank' rel='nofollow'><u>[BANNERNAME]</u></a><br /><span >[ALTERNATE]</span><br />";
                         }
                         if (!String.IsNullOrEmpty(Convert.ToString(Settings["bannerfooter"])))
                         {
@@ -221,7 +227,8 @@ namespace Dnn.Modules.Vendors
 
                     ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannerheader", txtHeader.Text);
                     ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannercontent", txtContent.Text);
-                    ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannerFooter", txtFooter.Text);
+                    ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannertext", txtContentText.Text);
+                    ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannerfooter", txtFooter.Text);
                     ModuleController.Instance.UpdateModuleSetting(ModuleId, "bannercount", txtCount.Text);
                     ModuleController.Instance.UpdateModuleSetting(ModuleId, "border", txtBorder.Text);
                     ModuleController.Instance.UpdateModuleSetting(ModuleId, "bordercolor", txtBorderColor.Text);

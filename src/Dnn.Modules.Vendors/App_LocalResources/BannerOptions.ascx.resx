@@ -229,7 +229,7 @@
     <value>Legacy</value>
   </data>
   <data name="plContent.Text" xml:space="preserve">
-    <value>Content template</value>
+    <value>Image banner template</value>
   </data>
   <data name="plFooter.Text" xml:space="preserve">
     <value>Footer template</value>
@@ -239,5 +239,11 @@
   </data>
   <data name="Template.Text" xml:space="preserve">
     <value>Template</value>
+  </data>
+  <data name="plDisplay.Text" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="plContentText.Text" xml:space="preserve">
+    <value>Text banner template</value>
   </data>
 </root>

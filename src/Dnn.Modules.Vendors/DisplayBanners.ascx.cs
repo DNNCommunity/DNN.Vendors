@@ -76,7 +76,6 @@ namespace Dnn.Modules.Vendors
         /// server control.  It uses the DotNetNuke.BannerDB()
         /// data component to encapsulate all data functionality.
         /// </summary>
-        /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <remarks></remarks>
         protected override void OnLoad(EventArgs e)
@@ -223,7 +222,7 @@ namespace Dnn.Modules.Vendors
             var objBanners = new BannerController();
             ArrayList arrBanners = objBanners.LoadBanners(intPortalId, ModuleId, intBannerTypeId, strBannerGroup, intBanners);
 
-            string strHeader, strContent, strFooter;
+            string strHeader, strContent, strContentText, strFooter;
             if (!String.IsNullOrEmpty(Convert.ToString(Settings["bannerheader"])))
             {
                 strHeader = Convert.ToString(Settings["bannerheader"]);
@@ -232,13 +231,22 @@ namespace Dnn.Modules.Vendors
             {
                 strHeader = "<div>";
             }
+
             if (!String.IsNullOrEmpty(Convert.ToString(Settings["bannercontent"])))
             {
                 strContent = Convert.ToString(Settings["bannercontent"]);
             }
             else
             {
-                strContent = "<a href=[LINKIMAGE] target=_self rel=nofollow><img src = [URLIMAGE] alt = [ALTERNATE] /></a > ";
+                strContent = "<a href=[LINKBANNER] target='_blank' rel='nofollow'><img src = [URLIMAGE] alt = [ALTERNATE] /></a > ";
+            }
+            if (!String.IsNullOrEmpty(Convert.ToString(Settings["bannertext"])))
+            {
+                strContentText = Convert.ToString(Settings["bannertext"]);
+            }
+            else
+            {
+                strContentText = "<a href=[LINKBANNER] target='_blank' rel='nofollow'><u>[BANNERNAME]</u></a><br /><span >[ALTERNATE]</span><br />";
             }
             if (!String.IsNullOrEmpty(Convert.ToString(Settings["bannerfooter"])))
             {
@@ -251,13 +259,30 @@ namespace Dnn.Modules.Vendors
             StringBuilder strHtml = new StringBuilder(2000);
             strHtml.Append(strHeader.Trim());
 
+
             foreach (object objbanner in arrBanners)
             {
                 BannerInfo banner = (BannerInfo)objbanner;
-                string linkImage = objBanners.FormatURL(banner.VendorId, banner.BannerId, banner.URL, Convert.ToString(Settings["bannerclickthroughurl"]));
-                string strContent2 = strContent;
-                strContent2 = strContent2.Replace("[LINKIMAGE]", linkImage);
-                strContent2 = strContent2.Replace("[URLIMAGE]", PortalSettings.HomeDirectory + banner.ImageFile);
+
+                string linkBanner = objBanners.FormatURL(banner.VendorId, banner.BannerId, banner.URL, Convert.ToString(Settings["bannerclickthroughurl"]));
+                string strContent2 = "";
+                switch (banner.BannerTypeId)
+                {
+                    case (int)BannerType.Text:
+                        strContent2 = strContentText;
+                        strContent2 = strContent2.Replace("[LINKBANNER]", linkBanner);
+                        strContent2 = strContent2.Replace("[BANNERNAME]", banner.BannerName);
+                        strContent2 = strContent2.Replace("[ALTERNATE]", banner.Description);
+                        
+                        break;
+                    case (int)BannerType.Banner:
+                        strContent2 = strContent;
+                        strContent2 = strContent2.Replace("[BANNERNAME]", banner.BannerName);
+                        strContent2 = strContent2.Replace("[LINKBANNER]", linkBanner);
+                        strContent2 = strContent2.Replace("[URLIMAGE]", PortalSettings.HomeDirectory + banner.ImageFile);
+                        strContent2 = strContent2.Replace("[ALTERNATE]", banner.Description);
+                        break;
+                }
                 strHtml.Append(strContent2.Trim());
 
             }
