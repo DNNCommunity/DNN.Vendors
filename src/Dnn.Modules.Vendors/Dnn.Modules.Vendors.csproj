@@ -26,17 +26,18 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>..\..\..\..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Dnn.Modules.Vendors.XML</DocumentationFile>
-    <NoWarn>1591</NoWarn>
+    <NoWarn>
+    </NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>..\..\..\..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -132,7 +133,6 @@
     <Compile Include="Components\ClassificationInfo.cs" />
     <Compile Include="Components\VendorInfo.cs" />
     <Compile Include="Components\VendorsController.cs" />
-    <Compile Include="DataProvider.cs" />
     <Compile Include="Data\DataService.cs" />
     <Compile Include="Data\IDataService.cs" />
     <Compile Include="DisplayBanners.ascx.cs">
