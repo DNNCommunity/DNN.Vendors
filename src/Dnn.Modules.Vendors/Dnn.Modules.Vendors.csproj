@@ -19,6 +19,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -130,6 +132,7 @@
     <Compile Include="Components\ClassificationInfo.cs" />
     <Compile Include="Components\VendorInfo.cs" />
     <Compile Include="Components\VendorsController.cs" />
+    <Compile Include="DataProvider.cs" />
     <Compile Include="Data\DataService.cs" />
     <Compile Include="Data\IDataService.cs" />
     <Compile Include="DisplayBanners.ascx.cs">
@@ -181,16 +184,10 @@
     <Content Include="editaffiliate.ascx" />
     <Content Include="editbanner.ascx" />
     <Content Include="editvendors.ascx" />
-    <Content Include="Externals\DotNetNuke.Web.Deprecated.dll" />
-    <Content Include="Externals\DotNetNuke.WebControls.dll" />
-    <Content Include="Externals\Telerik.Web.UI.dll" />
     <Content Include="license.txt" />
     <Content Include="module.css" />
     <Content Include="Vendors.ascx" />
     <Content Include="releaseNotes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Module.build" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="dnn_Vendors.dnn">
@@ -214,6 +211,9 @@
   <ItemGroup>
     <Content Include="App_LocalResources\BannerOptions.ascx.resx" />
     <Content Include="App_LocalResources\DisplayBanners.ascx.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BuildScripts\ModulePackage.targets" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
