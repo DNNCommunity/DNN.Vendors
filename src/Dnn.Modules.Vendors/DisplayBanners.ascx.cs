@@ -68,7 +68,6 @@ namespace Dnn.Modules.Vendors
         /// server control.  It uses the DotNetNuke.BannerDB()
         /// data component to encapsulate all data functionality.
         /// </summary>
-        /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <remarks></remarks>
         protected override void OnLoad(EventArgs e)
