@@ -195,6 +195,14 @@
             </attributes>
           </eventMessage>
         </component>
+        <component type="File">
+          <files>
+            <basePath>DesktopModules\Vendors</basePath>
+            <file>
+              <name>BannerClickThrough.aspx</name>
+            </file>
+          </files>
+        </component>
       </components>
     </package>
   </packages>
