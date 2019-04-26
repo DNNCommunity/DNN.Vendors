@@ -43,6 +43,8 @@ namespace Dnn.Modules.Vendors.Components
 
         private IDataService _dataService = new DataService();
         private string BannerClickThroughPage = "/DesktopModules/Vendors/BannerClickThrough.aspx";
+        
+        #endregion
 
         #region "Private Methods"
 
