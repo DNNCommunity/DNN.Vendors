@@ -116,7 +116,7 @@ namespace Dnn.Modules.Vendors
 		/// </summary>
 		/// <remarks>
 		/// </remarks>
-		/// <paam name="DateValue">The Date to format</param>
+		/// <param name="DateValue">The Date to format</param>
 		/// <returns>The correctly formatted date</returns>
 		/// <history>
 		/// 	[cnurse]	9/17/2004	Updated to reflect design changes for Help, 508 support
@@ -141,8 +141,8 @@ namespace Dnn.Modules.Vendors
 		/// </summary>
 		/// <remarks>
 		/// </remarks>
-		/// <paam name="strKeyName">The name of the key to add</param>
-		/// <paam name="strKeyValue">The value to add</param>
+		/// <param name="strKeyName">The name of the key to add</param>
+		/// <param name="strKeyValue">The value to add</param>
 		/// <returns>The correctly formatted url</returns>
 		/// <history>
 		/// 	[cnurse]	9/17/2004	Updated to reflect design changes for Help, 508 support
