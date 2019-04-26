@@ -55,6 +55,7 @@ Task("ReleasePackage")
 	resourceFiles.Add(GetFiles("./App_LocalResources/*.resx"));
 	resourceFiles.Add(GetFiles("./*.css"));
 	resourceFiles.Add(GetFiles("./*.txt"));
+	resourceFiles.Add(GetFiles("./*.png"));
 	foreach (var file in resourceFiles)
 	{
 		Information("Zipping resource file: " + file);
