@@ -4,7 +4,8 @@
 	
 	<h4>Version 8.1.0</h4>
 	<ul>
-		<li>Fixed an issue with the BannerClickThrough redirect</li>		
+		<li>Fixed an issue with the BannerClickThrough redirect</li>
+		<li>New templating feature to allow making the module responsive</li>
 	</ul>
 	<hr />
 
