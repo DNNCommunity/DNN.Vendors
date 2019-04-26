@@ -5,5 +5,6 @@ The Vendors module project allows admins to manage Vendor relationships and add 
 
 ## To build this module
 - Clone this repository to the DesktopModules folder of a local Dnn website.
+- Build the module in release mode
+- Install the module using the generated install zip in the Install folder.
 - Build in debug mode after each change to deploy to the module folder.
-- Build in release mode to package the module for installation.
