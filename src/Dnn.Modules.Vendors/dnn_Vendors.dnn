@@ -112,7 +112,9 @@
             <resourceFile>
               <name>Resources.zip</name>
             </resourceFile>
-          </resourceFiles>
+          </resourceFiles>          
+        </component>
+        <component type="ResourceFile">
           <resourceFiles>
             <basePath>bin</basePath>
             <resourceFile>
