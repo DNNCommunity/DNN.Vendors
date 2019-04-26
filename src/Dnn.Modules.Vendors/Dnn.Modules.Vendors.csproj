@@ -226,6 +226,7 @@
   <ItemGroup>
     <Content Include="web.config" />
     <Content Include="build.cake" />
+    <None Include="BuildScripts\Module.Targets" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -258,8 +259,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
+  <Import Project="BuildScripts/Module.Targets" />
+  <Target Name="AfterBuild" DependsOnTargets="PackageModule;CopyModule" />
 </Project>

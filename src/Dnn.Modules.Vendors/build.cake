@@ -30,25 +30,12 @@ Teardown(ctx =>
 // TASKS
 ///////////////////////////////////////////////////////////////////////////////
 
-Task("NuGet-Package-Restore")
-.Does(() => {
-	NuGetRestore("./Dnn.Modules.Vendors.sln");
-});
-
 Task("Clean")
 .Does(()=>{
 	CleanDirectory("./Install");
 	CleanDirectory("./Install/Package");
 	CleanDirectory("./Install/Package/bin");
 	CleanDirectory("./Install/Package/Providers/DataProviders/SqlDataProvider");
-});
-
-Task("Build")
-.IsDependentOn("Clean")
-.IsDependentOn("NuGet-Package-Restore")
-.Does(() => {
-	MSBuild("./Dnn.Modules.Vendors.sln", new MSBuildSettings()
-	.SetConfiguration(configuration));
 });
 
 Task("GetInfo")
@@ -59,7 +46,6 @@ Task("GetInfo")
 
 Task("ReleasePackage")
 .IsDependentOn("Clean")
-.IsDependentOn("Build")
 .IsDependentOn("GetInfo")
 .Does(() => {	
 

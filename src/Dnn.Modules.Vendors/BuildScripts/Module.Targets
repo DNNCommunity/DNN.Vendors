@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+
+<!-- WARNING, WARNING, WARNING -->
+<!-- REMEMBER THAT IF YOU MODIFY THE TARGETS FILE YOU NEED TO CLOSE/OPEN THE PROJECT FOR THE CHANGES TO TAKE EFFECT -->
+
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
+  
+  <Target Name="PackageModule" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Message Importance="high" Text="Running Cake Packaging" />
+    <Exec Command="powershell -command &quot;&amp; { ./build.ps1 }&quot;" />
+  </Target>
+  
+  <Target Name="CopyModule" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Message Importance="high" Text="Deploying modified files to module folder" />
+    <ItemGroup>
+      <DeploymentFiles Include="**\App_LocalResources\*.resx" />
+      <DeploymentFiles Include="**\*.ascx" />
+      <DeploymentFiles Include="**\*.aspx" />
+      <DeploymentFiles Include="**\*.css" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Deploymentfiles)" DestinationFolder="..\..\..\Vendors" SkipUnchangedFiles="true" />
+  </Target>
+  
+</Project>
