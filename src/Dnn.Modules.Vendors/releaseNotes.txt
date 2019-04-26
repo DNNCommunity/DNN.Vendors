@@ -2,13 +2,13 @@
 <div class="License">
 	<h3>About Vendors</h3>
 	
-	<h4>Version 8.0.0</h4>
-	<p>This is the initial release of the extracted Vendors Module</p>
-	<hr />
-
 	<h4>Version 8.1.0</h4>
 	<ul>
-		
+		<li>Fixed an issue with the BannerClickThrough redirect</li>		
 	</ul>
-	
+	<hr />
+
+	<h4>Version 8.0.0</h4>
+	<p>This is the initial release of the extracted Vendors Module</p>
+
 </div>
