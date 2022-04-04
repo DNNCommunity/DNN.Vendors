@@ -1,16 +1,17 @@
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
-<%@ Control Language="C#" AutoEventWireup="false" Inherits="Dnn.Modules.Vendors.EditAffiliate" Codebehind="EditAffiliate.ascx.cs" %>
+<%@ Control Language="C#" AutoEventWireup="True" Inherits="Dnn.Modules.Vendors.EditAffiliate" CodeBehind="EditAffiliate.ascx.cs" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
-<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web.Deprecated" %>
+<link rel="stylesheet" href="/Resources/Shared/components/TimePicker/Themes/jquery-ui.css"/>
+<link rel="stylesheet" href="/Resources/Shared/components/TimePicker/Themes/jquery.ui.theme.css"/>
 <div class="dnnForm dnnEditAffiliate dnnClear" id="dnnEditAffiliate">
     <fieldset>        
         <div class="dnnFormItem">
             <dnn:label id="plStartDate" runat="server" controlname="txtStartDate" />
-            <dnn:DnnDatePicker ID="StartDatePicker" runat="server" />
+            <asp:TextBox ID="StartDatePicker" runat="server" maxlength="10" Columns="30" CssClass="datepick" />
         </div>
         <div class="dnnFormItem">
             <dnn:label id="plEndDate" runat="server" controlname="txtEndDate" />
-			<dnn:DnnDatePicker ID="EndDatePicker" runat="server" />
+            <asp:TextBox ID="EndDatePicker" runat="server" maxlength="10" Columns="30" />
         </div>
         <div class="dnnFormItem">
             <dnn:label id="plCPC" runat="server" controlname="txtCPC" cssclass="dnnFormRequired" />
@@ -48,6 +49,8 @@
     }
     $(document).ready(function () {
         setUpDnnEditAffiliate();
+	    $("#<%= StartDatePicker.ClientID %>").datepicker();
+        $("#<%= EndDatePicker.ClientID %>").datepicker();
         Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
             setUpDnnEditAffiliate();
         });

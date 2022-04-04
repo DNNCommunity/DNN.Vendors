@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Dnn.Modules.Vendors</RootNamespace>
     <AssemblyName>Dnn.Modules.Vendors</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -46,22 +46,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DotNetNuke, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\DotNetNuke.Core.8.0.0.809\lib\net40\DotNetNuke.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\DNN9\bin\DotNetNuke.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.Instrumentation, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\DotNetNuke.Instrumentation.8.0.0.809\lib\net40\DotNetNuke.Instrumentation.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\AzureDNN\wwwroot\bin\DotNetNuke.Instrumentation.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.Web, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\DotNetNuke.Web.8.0.0.809\lib\net40\DotNetNuke.Web.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DotNetNuke.Web.Deprecated, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\DotNetNuke.Web.Deprecated.8.0.0.809\lib\net40\DotNetNuke.Web.Deprecated.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\DNN9\bin\DotNetNuke.Web.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
@@ -71,17 +66,16 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.WebUtility, Version=4.2.1.783, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\DotNetNuke.Web.Deprecated.8.0.0.809\lib\net40\DotNetNuke.WebUtility.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\DNN9\bin\DotNetNuke.WebUtility.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data">
-      <HintPath>packages\DotNetNuke.Core.8.0.0.809\lib\net40\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\AzureDNN\wwwroot\bin\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -95,11 +89,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Telerik.Web.UI, Version=2013.2.717.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
-      <HintPath>packages\DotNetNuke.Web.Deprecated.8.0.0.809\lib\net40\Telerik.Web.UI.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Affiliates.ascx.cs">

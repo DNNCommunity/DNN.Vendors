@@ -55,11 +55,12 @@ namespace Dnn.Modules.Vendors
         private int AffiliateId = -1;
         private int VendorId = -1;
 
+
         public new int PortalId
         {
             get
             {
-				if (Globals.IsHostTab(PortalSettings.ActiveTab.TabID))
+                if (Globals.IsHostTab(PortalSettings.ActiveTab.TabID))
                 {
                     return -1;
                 }
@@ -91,16 +92,17 @@ namespace Dnn.Modules.Vendors
             cmdSend.Click += OnSendClick;
             cmdUpdate.Click += OnUpdateClick;
 
+
             if ((Request.QueryString["VendorId"] != null))
             {
                 VendorId = Int32.Parse(Request.QueryString["VendorId"]);
             }
-			
+
             if ((Request.QueryString["AffilId"] != null))
             {
                 AffiliateId = Int32.Parse(Request.QueryString["AffilId"]);
             }
-			
+
             if (Page.IsPostBack == false)
             {
 
@@ -111,8 +113,9 @@ namespace Dnn.Modules.Vendors
                     var affiliate = affiliateController.GetAffiliate(AffiliateId);
                     if (affiliate != null)
                     {
-                        StartDatePicker.SelectedDate = Null.IsNull(affiliate.StartDate) ? (DateTime?) null : affiliate.StartDate;
-                        EndDatePicker.SelectedDate = Null.IsNull(affiliate.EndDate) ? (DateTime?)null : affiliate.EndDate;
+                        StartDatePicker.Text = Null.IsNull(affiliate.StartDate) ? null : affiliate.StartDate.ToShortDateString();
+                        EndDatePicker.Text = Null.IsNull(affiliate.EndDate) ? null : affiliate.EndDate.ToShortDateString();
+
 
                         txtCPC.Text = affiliate.CPC.ToString("#0.0####");
                         txtCPA.Text = affiliate.CPA.ToString("#0.0####");
@@ -239,15 +242,18 @@ namespace Dnn.Modules.Vendors
         {
             if (Page.IsValid)
             {
+                DateTime startResult;
+                DateTime endResult;
+
                 var objAffiliate = new AffiliateInfo
-                                       {
-                                           AffiliateId = AffiliateId,
-                                           VendorId = VendorId,
-                                           StartDate =  StartDatePicker.SelectedDate.HasValue ? StartDatePicker.SelectedDate.Value : Null.NullDate,
-                                           EndDate = EndDatePicker.SelectedDate.HasValue ? EndDatePicker.SelectedDate.Value : Null.NullDate,
-                                           CPC = double.Parse(txtCPC.Text),
-                                           CPA = double.Parse(txtCPA.Text)
-                                       };
+                {
+                    AffiliateId = AffiliateId,
+                    VendorId = VendorId,
+                    StartDate = DateTime.TryParse(StartDatePicker.Text, out startResult) ? startResult : Null.NullDate,
+                    EndDate = DateTime.TryParse(EndDatePicker.Text, out endResult) ? endResult : Null.NullDate,
+                    CPC = double.Parse(txtCPC.Text),
+                    CPA = double.Parse(txtCPA.Text)
+                };
                 var objAffiliates = new AffiliateController();
 
                 if (AffiliateId == -1)
@@ -258,7 +264,7 @@ namespace Dnn.Modules.Vendors
                 {
                     objAffiliates.UpdateAffiliate(objAffiliate);
                 }
-				
+
                 //Redirect back to the portal home page
                 Response.Redirect(EditUrl("VendorId", VendorId.ToString()), true);
             }

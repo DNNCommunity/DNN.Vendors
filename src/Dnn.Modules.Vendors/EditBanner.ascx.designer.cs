@@ -91,7 +91,7 @@ namespace Dnn.Modules.Vendors {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.WebControls.DNNTextSuggest DNNTxtBannerGroup;
+        protected global::System.Web.UI.WebControls.TextBox DNNTxtBannerGroup;
         
         /// <summary>
         /// plImage control.
@@ -101,15 +101,6 @@ namespace Dnn.Modules.Vendors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UserControl plImage;
-        
-        /// <summary>
-        /// ctlImage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.Web.UI.WebControls.DnnUrlControl ctlImage;
         
         /// <summary>
         /// plWidth control.
@@ -174,15 +165,7 @@ namespace Dnn.Modules.Vendors {
         /// </remarks>
         protected global::System.Web.UI.UserControl plURL;
         
-        /// <summary>
-        /// ctlURL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.Web.UI.WebControls.DnnUrlControl ctlURL;
-        
+       
         /// <summary>
         /// plCPM control.
         /// </summary>
@@ -271,7 +254,7 @@ namespace Dnn.Modules.Vendors {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.Web.UI.WebControls.DnnDatePicker StartDatePicker;
+        protected global::System.Web.UI.WebControls.TextBox StartDatePicker;
         
         /// <summary>
         /// plEndDate control.
@@ -289,7 +272,7 @@ namespace Dnn.Modules.Vendors {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.Web.UI.WebControls.DnnDatePicker EndDatePicker;
+        protected global::System.Web.UI.WebControls.TextBox EndDatePicker;
         
         /// <summary>
         /// plCriteria control.
@@ -354,13 +337,5 @@ namespace Dnn.Modules.Vendors {
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdEmail;
         
-        /// <summary>
-        /// ctlAudit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.ModuleAuditControl ctlAudit;
     }
 }

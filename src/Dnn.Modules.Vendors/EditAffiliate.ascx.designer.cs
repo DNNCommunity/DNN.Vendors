@@ -28,7 +28,7 @@ namespace Dnn.Modules.Vendors {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.Web.UI.WebControls.DnnDatePicker StartDatePicker;
+        protected global::System.Web.UI.WebControls.TextBox StartDatePicker;
         
         /// <summary>
         /// plEndDate control.
@@ -46,7 +46,7 @@ namespace Dnn.Modules.Vendors {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.Web.UI.WebControls.DnnDatePicker EndDatePicker;
+        protected global::System.Web.UI.WebControls.TextBox EndDatePicker;
         
         /// <summary>
         /// plCPC control.
