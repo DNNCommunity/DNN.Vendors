@@ -113,8 +113,8 @@ namespace Dnn.Modules.Vendors
                     var affiliate = affiliateController.GetAffiliate(AffiliateId);
                     if (affiliate != null)
                     {
-                        StartDatePicker.Text = Null.IsNull(affiliate.StartDate) ? null : affiliate.StartDate.ToShortDateString();
-                        EndDatePicker.Text = Null.IsNull(affiliate.EndDate) ? null : affiliate.EndDate.ToShortDateString();
+                        StartDatePicker.Text = Null.IsNull(affiliate.StartDate) ? null : affiliate.StartDate.ToString("yyyy-MM-dd");
+                        EndDatePicker.Text = Null.IsNull(affiliate.EndDate) ? null : affiliate.EndDate.ToString("yyyy-MM-dd");
 
 
                         txtCPC.Text = affiliate.CPC.ToString("#0.0####");

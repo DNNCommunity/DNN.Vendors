@@ -4,8 +4,6 @@
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <%@ Register TagPrefix="dnn" Assembly="DotNetNuke.WebControls" Namespace="DotNetNuke.UI.WebControls" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
-<link rel="stylesheet" href="/Resources/Shared/components/TimePicker/Themes/jquery-ui.css"/>
-<link rel="stylesheet" href="/Resources/Shared/components/TimePicker/Themes/jquery.ui.theme.css"/>
 <div class="dnnForm dnnEditBanner dnnClear" id="dnnEditBanner">
 	<fieldset>		
 		<div id="bannersRow" runat="server" Visible="false" class="dnnFormItem">
@@ -65,11 +63,11 @@
 		</div>    
 		<div class="dnnFormItem">
 			<dnn:Label id="plStartDate" runat="server" controlname="txtStartDate" />
-		    <asp:TextBox id="StartDatePicker" runat="server" maxlength="10" Columns="30" />
+		    <asp:TextBox id="StartDatePicker" runat="server" maxlength="10" Columns="30" CssClass="datepick" TextMode="Date" />
 		</div>    
 		<div class="dnnFormItem">
 			<dnn:Label id="plEndDate" runat="server" controlname="txtEndDate" />
-			<asp:TextBox id="EndDatePicker" runat="server" maxlength="10" Columns="30" />
+			<asp:TextBox id="EndDatePicker" runat="server" maxlength="10" Columns="30" CssClass="datepick" TextMode="Date" />
 		</div>    
 		<div class="dnnFormItem">
 			<dnn:Label id="plCriteria" runat="server" controlname="optCriteria" />
@@ -106,8 +104,6 @@
 	}
 	$(document).ready(function () {
 	    setUpDnnEditBanner();
-        $("#<%= StartDatePicker.ClientID %>").datepicker();
-        $("#<%= EndDatePicker.ClientID %>").datepicker();
 		Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
 			setUpDnnEditBanner();
 		});

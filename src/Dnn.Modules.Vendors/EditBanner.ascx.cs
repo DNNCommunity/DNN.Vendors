@@ -159,8 +159,8 @@ namespace Dnn.Modules.Vendors
                             txtImpressions.Text = banner.Impressions.ToString();
                             txtCPM.Text = banner.CPM.ToString();
 
-                            StartDatePicker.Text = Null.IsNull(banner.StartDate) ? null : banner.StartDate.ToShortDateString();
-                            EndDatePicker.Text = Null.IsNull(banner.EndDate) ? null : banner.EndDate.ToShortDateString();
+                            StartDatePicker.Text = Null.IsNull(banner.StartDate) ? null : banner.StartDate.ToString("yyyy-MM-dd"); // ToShortDateString();
+                            EndDatePicker.Text = Null.IsNull(banner.EndDate) ? null : banner.EndDate.ToString("yyyy-MM-dd"); //ToShortDateString();
 
                             optCriteria.Items.FindByValue(banner.Criteria.ToString()).Selected = true;
 
