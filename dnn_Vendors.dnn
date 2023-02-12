@@ -1,6 +1,6 @@
-﻿<dotnetnuke type="Package" version="5.0">
+<dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="DotNetNuke.Vendors" type="Module" version="08.01.00">
+    <package name="DotNetNuke.Vendors" type="Module" version="08.01.01">
       <friendlyName>Vendors</friendlyName>
       <description>Administrators can manage the Vendors and Banners associated to the site. This module allows you to add a new vendor, modify an existing vendor, and delete a vendor.</description>
       <iconFile>~/Icons/Sigma/Vendors_32X32_Standard.png</iconFile>
@@ -45,7 +45,8 @@
                     <controlSrc>DesktopModules/Vendors/Vendors.ascx</controlSrc>
                     <controlTitle />
                     <controlType>View</controlType>
-                    <iconFile></iconFile>
+                    <iconFile>
+                    </iconFile>
                     <helpUrl>http://help.dotnetnuke.com/070100/default.htm#Documentation/Using the Control Panel/Admin Console/Vendors/About the Admin Vendors Module.html</helpUrl>
                     <viewOrder>0</viewOrder>
                     <supportsPartialRendering>True</supportsPartialRendering>
@@ -56,7 +57,8 @@
                     <controlSrc>DesktopModules/Vendors/EditAffiliate.ascx</controlSrc>
                     <controlTitle>Affiliate Management</controlTitle>
                     <controlType>Edit</controlType>
-                    <iconFile></iconFile>
+                    <iconFile>
+                    </iconFile>
                     <helpUrl>http://help.dotnetnuke.com/070100/default.htm#Documentation/Using the Control Panel/Admin Console/Vendors/Module Editors/Affiliate Accounts/Adding an Affiliate Referral Account .html</helpUrl>
                     <viewOrder>0</viewOrder>
                     <supportsPartialRendering>True</supportsPartialRendering>
@@ -67,7 +69,8 @@
                     <controlSrc>DesktopModules/Vendors/editbanner.ascx</controlSrc>
                     <controlTitle>Banner</controlTitle>
                     <controlType>Edit</controlType>
-                    <iconFile></iconFile>
+                    <iconFile>
+                    </iconFile>
                     <helpUrl>http://help.dotnetnuke.com/070100/default.htm#Documentation/Using the Control Panel/Admin Console/Vendors/Module Editors/Vendor Banners/Adding an Image Banner to a Vendor.html</helpUrl>
                     <viewOrder>0</viewOrder>
                     <supportsPartialRendering>True</supportsPartialRendering>
@@ -78,7 +81,8 @@
                     <controlSrc>DesktopModules/Vendors/editvendors.ascx</controlSrc>
                     <controlTitle>Edit Vendors</controlTitle>
                     <controlType>Edit</controlType>
-                    <iconFile></iconFile>
+                    <iconFile>
+                    </iconFile>
                     <helpUrl>http://help.dotnetnuke.com/070100/default.htm#Documentation/Using the Control Panel/Admin Console/Vendors/Module Editors/Vendor Accounts/Adding a New Vendor.html</helpUrl>
                     <viewOrder>0</viewOrder>
                     <supportsPartialRendering>True</supportsPartialRendering>
@@ -112,7 +116,7 @@
             <resourceFile>
               <name>Resources.zip</name>
             </resourceFile>
-          </resourceFiles>          
+          </resourceFiles>
         </component>
         <component type="ResourceFile">
           <resourceFiles>
@@ -122,7 +126,7 @@
             </resourceFile>
           </resourceFiles>
         </component>
-        <component type="Cleanup" version="08.00.00" fileName ="08.00.00.txt" />
+        <component type="Cleanup" version="08.01.01" fileName="08.00.00.txt" />
         <component type="File">
           <files>
             <basePath>DesktopModules\Vendors</basePath>
@@ -133,7 +137,7 @@
         </component>
       </components>
     </package>
-    <package name="DotNetNuke.Banners" type="Module" version="08.01.00">
+    <package name="DotNetNuke.Banners" type="Module" version="08.01.01">
       <friendlyName>Banners</friendlyName>
       <description>Banner advertising is managed through the Vendors module in the Admin tab. You can select the number of banners to display as well as the banner type.</description>
       <iconFile>DesktopModules/Vendors/banners.png</iconFile>
@@ -164,7 +168,8 @@
                     <controlSrc>DesktopModules/Vendors/DisplayBanners.ascx</controlSrc>
                     <controlTitle />
                     <controlType>View</controlType>
-                    <iconFile></iconFile>
+                    <iconFile>
+                    </iconFile>
                     <helpUrl>http://help.dotnetnuke.com/070100/default.htm#Documentation/Building Your Site/Installed Modules/Banners/About the Banners Module.html</helpUrl>
                     <viewOrder>0</viewOrder>
                     <supportsPartialRendering>True</supportsPartialRendering>
@@ -175,7 +180,8 @@
                     <controlSrc>DesktopModules/Vendors/BannerOptions.ascx</controlSrc>
                     <controlTitle>Edit Banners</controlTitle>
                     <controlType>Edit</controlType>
-                    <iconFile></iconFile>
+                    <iconFile>
+                    </iconFile>
                     <helpUrl>http://help.dotnetnuke.com/070100/default.htm#Documentation/Building Your Site/Installed Modules/Banners/Module Editors/Editing Banner Options.html</helpUrl>
                     <viewOrder>0</viewOrder>
                     <supportsPartialRendering>True</supportsPartialRendering>
