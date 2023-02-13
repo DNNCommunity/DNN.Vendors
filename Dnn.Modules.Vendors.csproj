@@ -187,6 +187,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="08.00.00.txt" />
     <Content Include="affiliates.ascx" />
     <Content Include="App_LocalResources\Vendors.ascx.resx" />
