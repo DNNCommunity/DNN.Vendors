@@ -76,8 +76,7 @@
               "Compile",
               "Deploy",
               "Package",
-              "Restore",
-              "SetManifestVersions"
+              "Restore"
             ]
           }
         },
@@ -95,8 +94,7 @@
               "Compile",
               "Deploy",
               "Package",
-              "Restore",
-              "SetManifestVersions"
+              "Restore"
             ]
           }
         },
