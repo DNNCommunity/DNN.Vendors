@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "_build": {
+      "commandName": "Project"
+    },
+    "Deploy": {
+      "commandName": "Project",
+      "commandLineArgs": "--target Deploy"
+    },
+    "Package": {
+      "commandName": "Project",
+      "commandLineArgs": "--target Package"
+    }
+  }
+}
