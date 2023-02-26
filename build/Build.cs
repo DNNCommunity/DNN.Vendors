@@ -1,8 +1,12 @@
 using System;
 using System.Linq;
+using System.Reflection;
+using System.Xml.Linq;
+using Extensions;
 using Microsoft.Build.Tasks;
 using Nuke.Common;
 using Nuke.Common.CI;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
@@ -16,6 +20,11 @@ using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
+[GitHubActions(
+    "continous",
+    GitHubActionsImage.UbuntuLatest,
+    On = new[] { GitHubActionsTrigger.Push },
+    InvokedTargets = new [] { nameof(Package) })]
 [ShutdownDotNetAfterServerBuild]
 class Build : NukeBuild
 {
@@ -34,6 +43,8 @@ class Build : NukeBuild
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
 
+    GitHubActions GitHubActions => GitHubActions.Instance;
+
     string ModuleName => "Dnn.Modules.Vendors";
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
     AbsolutePath DnnBinDirectory => RootDirectory.Parent.Parent / "bin";
@@ -51,9 +62,38 @@ class Build : NukeBuild
             DotNetRestore(s => s
                 .SetProjectFile(Solution));
         });
+    Target SetManifestVersions => _ => _
+        .Executes(() =>
+        {
+            // Sets the module version
+            var manifest = GlobFiles(RootDirectory, "*.dnn").SingleOrDefault();
+            XDocument doc = XDocument.Load(manifest);
+            var packages = doc.Descendants("package");
+            foreach (var package in packages)
+            {
+                package.Attribute("version").Value = GitVersion.MajorMinorPatch;
+            }
+
+            // Sets the minimum DNN version
+            var binary = GlobFiles(RootDirectory / "bin" / Configuration, $"{ModuleName}.dll").SingleOrDefault();
+            var assembly = Assembly.LoadFile(binary);
+
+            var referencedAssemblies = assembly.GetReferencedAssemblies();
+            var dnnReference = referencedAssemblies.SingleOrDefault(a => a.Name == "DotNetNuke");
+            var dependencies = doc.Descendants("dependency").Where(n => n.Attribute("type").Value == "coreVersion");
+            foreach (var dependency in dependencies)
+            {
+                dependency.Value = dnnReference.Version.DnnMajorMinorPatch();
+            }
+            Serilog.Log.Information($"Updated DNN requirement for {dnnReference.Version.DnnMajorMinorPatch()}");
+
+            doc.Save(manifest);
+        });
+        
 
     Target Compile => _ => _
         .DependsOn(Restore)
+        .DependsOn(SetManifestVersions)
         .Executes(() =>
         {
             DotNetBuild(s => s
@@ -78,28 +118,32 @@ class Build : NukeBuild
         .DependsOn(Clean)
         .DependsOn(Compile)
         .Executes(() => {
-            var resourcesDir = ArtifactsDirectory / "Resources";
+            var stagingDirectory = ArtifactsDirectory / "Staging";
+            var resourcesDir = stagingDirectory / "Resources";
             var resourceFiles = GlobFiles(RootDirectory, "*.txt", "*.ascx", "*.aspx", "*.png", "*.css");
             resourceFiles.ForEach(file => CopyFileToDirectory(file, resourcesDir, FileExistsPolicy.Overwrite, createDirectories: true));
 
             var localizationFiles = GlobFiles(RootDirectory / "App_LocalResources", "*.*");
             localizationFiles.ForEach(file => CopyFileToDirectory(file, resourcesDir / "App_LocalResources", FileExistsPolicy.Overwrite, createDirectories: true));
 
-            CompressionTasks.CompressZip(resourcesDir, ArtifactsDirectory / "Resources.zip");
+            CompressionTasks.CompressZip(resourcesDir, stagingDirectory / "Resources.zip");
             DeleteDirectory(resourcesDir);
 
             var assembly = RootDirectory / "bin" / Configuration / $"{ModuleName}.dll";
-            CopyFileToDirectory(assembly, ArtifactsDirectory / "bin");
+            CopyFileToDirectory(assembly, stagingDirectory / "bin");
 
             CopyDirectoryRecursively(RootDirectory / "Providers" / "DataProviders" / "SqlDataProvider",
-                ArtifactsDirectory / "Providers" / "DataProviders" / "SqlDataProvider");
+                stagingDirectory / "Providers" / "DataProviders" / "SqlDataProvider");
 
-            var txtFiles = GlobFiles(RootDirectory / "*.txt");
-            txtFiles.ForEach(file => CopyFileToDirectory(file, ArtifactsDirectory));
+            var installFiles = GlobFiles(RootDirectory, "*.txt", "*.dnn");
+            installFiles.ForEach(file => CopyFileToDirectory(file, stagingDirectory));
 
             var symbols = GlobFiles(RootDirectory / "bin" / Configuration, $"{ModuleName}.pdb");
-            symbols.ForEach(file => CopyFileToDirectory(file, ArtifactsDirectory / "Symbols", FileExistsPolicy.Overwrite, createDirectories: true));
-            CompressionTasks.CompressZip(ArtifactsDirectory / "Symbols", ArtifactsDirectory / "Symbols.zip");
-            DeleteDirectory(ArtifactsDirectory / "Symbols");
+            symbols.ForEach(file => CopyFileToDirectory(file, stagingDirectory / "Symbols", FileExistsPolicy.Overwrite, createDirectories: true));
+            CompressionTasks.CompressZip(stagingDirectory / "Symbols", stagingDirectory / "Symbols.zip");
+            DeleteDirectory(stagingDirectory / "Symbols");
+
+            CompressionTasks.CompressZip(stagingDirectory, ArtifactsDirectory / $"{ModuleName}_v{GitVersion.MajorMinorPatch}.zip");
+            DeleteDirectory(stagingDirectory);
         });
 }
