@@ -271,23 +271,23 @@ namespace Dnn.Modules.Vendors
         ///  to user so the BannerGroup can be easily selected
         /// </history>
         /// -----------------------------------------------------------------------------
-        protected void DNNTxtBannerGroup_PopulateOnDemand(object source, DNNTextSuggestEventArgs e)
-        {
-            DataTable dt;
-            DNNNode objNode;
+        //protected void DNNTxtBannerGroup_PopulateOnDemand(object source, DNNTextSuggestEventArgs e)
+        //{
+        //    DataTable dt;
+        //    DNNNode objNode;
 
-            var objBanners = new BannerController();
-            dt = objBanners.GetBannerGroups(PortalId);
-            DataRow[] dr;
-            dt.CaseSensitive = false;
-            dr = dt.Select("GroupName like '" + e.Text + "%'");
-            foreach (DataRow d in dr)
-            {
-                objNode = new DNNNode(d["GroupName"].ToString());
-                objNode.ID = e.Nodes.Count.ToString();
-                e.Nodes.Add(objNode);
-            }
-        }
+        //    var objBanners = new BannerController();
+        //    dt = objBanners.GetBannerGroups(PortalId);
+        //    DataRow[] dr;
+        //    dt.CaseSensitive = false;
+        //    dr = dt.Select("GroupName like '" + e.Text + "%'");
+        //    foreach (DataRow d in dr)
+        //    {
+        //        objNode = new DNNNode(d["GroupName"].ToString());
+        //        objNode.ID = e.Nodes.Count.ToString();
+        //        e.Nodes.Add(objNode);
+        //    }
+        //}
 
         protected void optDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {

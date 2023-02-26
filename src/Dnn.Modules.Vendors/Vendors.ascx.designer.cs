@@ -28,7 +28,7 @@ namespace Dnn.Modules.Vendors {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.Web.UI.WebControls.DnnComboBox ddlSearchType;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSearchType;
         
         /// <summary>
         /// btnSearch control.
@@ -55,7 +55,7 @@ namespace Dnn.Modules.Vendors {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.Web.UI.WebControls.DnnGrid grdVendors;
+        protected global::System.Web.UI.WebControls.DataGrid grdVendors;
         
         /// <summary>
         /// cmdAddVendor control.
