@@ -31,7 +31,7 @@ using DotNetNuke.Security.Permissions;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
-using Telerik.Web.UI;
+
 using Globals = DotNetNuke.Common.Globals;
 
 #endregion
@@ -193,6 +193,8 @@ namespace Dnn.Modules.Vendors
                         }
                     }
                     _searchField = "name";
+                    SetDataSource();
+                    grdVendors.DataBind();
                 }
             }
             catch (Exception exc)
@@ -246,12 +248,12 @@ namespace Dnn.Modules.Vendors
             SetDataSource();
             grdVendors.DataBind();
         }
-		
-		#endregion
 
-	    protected void NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-	    {
-	        SetDataSource();
-	    }
+        #endregion
+
+        protected void grdVendors_DataBinding(object sender, EventArgs e)
+        {
+            SetDataSource();
+        }
     }
 }

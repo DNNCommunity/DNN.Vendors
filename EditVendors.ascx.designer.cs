@@ -130,15 +130,6 @@ namespace Dnn.Modules.Vendors {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator valEmail2;
         
         /// <summary>
-        /// addresssVendor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.Address addresssVendor;
-        
-        /// <summary>
         /// plWebsite control.
         /// </summary>
         /// <remarks>
@@ -173,15 +164,6 @@ namespace Dnn.Modules.Vendors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UserControl plLogo;
-        
-        /// <summary>
-        /// ctlLogo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.Web.UI.WebControls.DnnUrlControl ctlLogo;
         
         /// <summary>
         /// rowVendor2 control.
@@ -300,13 +282,5 @@ namespace Dnn.Modules.Vendors {
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton cmdCancel;
         
-        /// <summary>
-        /// ctlAudit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.ModuleAuditControl ctlAudit;
     }
 }

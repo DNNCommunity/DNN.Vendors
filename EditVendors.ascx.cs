@@ -54,6 +54,9 @@ namespace Dnn.Modules.Vendors
     {
 
         public int VendorID = -1;
+        protected DotNetNuke.Web.UI.WebControls.DnnUrlControl ctlLogo;
+        protected DotNetNuke.UI.UserControls.Address addresssVendor;
+        protected DotNetNuke.UI.UserControls.ModuleAuditControl ctlAudit;
 
         #region Private Methods
 
