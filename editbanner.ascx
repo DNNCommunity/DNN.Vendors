@@ -3,7 +3,6 @@
 <%@ Register TagPrefix="dnn" TagName="Audit" Src="~/controls/ModuleAuditControl.ascx" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <%@ Register TagPrefix="dnn" Assembly="DotNetNuke.WebControls" Namespace="DotNetNuke.UI.WebControls" %>
-<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web.Deprecated" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
 <div class="dnnForm dnnEditBanner dnnClear" id="dnnEditBanner">
 	<fieldset>		
@@ -27,11 +26,11 @@
 		</div>
 		<div class="dnnFormItem">
 			<dnn:Label id="plBannerGroup" runat="server" controlname="txtBannerGroup"/>
-			<dnn:DNNTextSuggest id="DNNTxtBannerGroup" runat="server" Columns="30" LookupDelay="500" MaxLength="100" Width="300px" TextSuggestCssClass="SuggestTextMenu GroupSuggestMenu" DefaultNodeCssClassOver="SuggestNodeOver" />
+			<asp:textbox id="DNNTxtBannerGroup" runat="server" maxlength="100" Columns="30" />
 		</div>
 		<div class="dnnFormItem">
 			<dnn:Label id="plImage" runat="server" controlname="ctlImage" />
-			<div class="dnnLeft"><dnn:url id="ctlImage" runat="server" width="250" Required="False" ShowFiles="True" ShowTabs="False" ShowUrls="True" ShowTrack="False" ShowLog="False" UrlType="F" /></div>
+			<div class="dnnLeft"><dnn:URL id="ctlImage" runat="server" width="250" Required="False" ShowFiles="True" ShowTabs="False" ShowUrls="True" ShowTrack="False" ShowLog="False" UrlType="F" /></div>
 		</div>
 		<div class="dnnFormItem">
 			<dnn:Label id="plWidth" runat="server" controlname="txtWidth" />
@@ -47,7 +46,7 @@
 		</div>    
 		<div class="dnnFormItem">
 			<dnn:Label id="plURL" runat="server" controlname="ctlURL" />
-			<div class="dnnLeft"><dnn:url id="ctlURL" runat="server" Required="False" ShowFiles="True" ShowTabs="True" ShowUrls="True" ShowTrack="False" ShowLog="False" UrlType="U" /></div>
+			<div class="dnnLeft"><dnn:URL id="ctlURL" runat="server" Required="False" ShowFiles="True" ShowTabs="True" ShowUrls="True" ShowTrack="False" ShowLog="False" UrlType="U" /></div>
 	   </div>    
 		<div class="dnnFormItem">
 			<dnn:Label id="plCPM" runat="server" controlname="txtCPM" cssclass="dnnFormRequired" />
@@ -64,11 +63,11 @@
 		</div>    
 		<div class="dnnFormItem">
 			<dnn:Label id="plStartDate" runat="server" controlname="txtStartDate" />
-		    <dnn:DnnDatePicker ID="StartDatePicker" runat="server"/>
+		    <asp:TextBox id="StartDatePicker" runat="server" maxlength="10" Columns="30" CssClass="datepick" TextMode="Date" />
 		</div>    
 		<div class="dnnFormItem">
 			<dnn:Label id="plEndDate" runat="server" controlname="txtEndDate" />
-			<dnn:DnnDatePicker ID="EndDatePicker" runat="server"/>
+			<asp:TextBox id="EndDatePicker" runat="server" maxlength="10" Columns="30" CssClass="datepick" TextMode="Date" />
 		</div>    
 		<div class="dnnFormItem">
 			<dnn:Label id="plCriteria" runat="server" controlname="optCriteria" />
@@ -86,7 +85,7 @@
 		<li><asp:LinkButton id="cmdEmail" runat="server" CssClass="dnnSecondaryAction" resourcekey="cmdEmail" Causesvalidation="False" /></li>
 	</ul>
 	<div class="dnnssStat dnnClear">
-		<dnn:audit id="ctlAudit" runat="server" />
+		<dnn:Audit id="ctlAudit" runat="server" />
 	</div>
 </div>
 <script language="javascript" type="text/javascript">
@@ -104,7 +103,7 @@
 		});
 	}
 	$(document).ready(function () {
-		setUpDnnEditBanner();
+	    setUpDnnEditBanner();
 		Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
 			setUpDnnEditBanner();
 		});

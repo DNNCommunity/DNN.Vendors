@@ -1,11 +1,10 @@
 <%@ Control Language="C#" AutoEventWireup="True" Inherits="Dnn.Modules.Vendors.BannerOptions" CodeBehind="BannerOptions.ascx.cs" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
 <%@ Register TagPrefix="dnn" Assembly="DotNetNuke.WebControls" Namespace="DotNetNuke.UI.WebControls" %>
-<%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web.Deprecated" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
 <div class="dnnForm dnnBannerOptions dnnClear">
     <div class="dnnFormItem">
-        <dnn:label id="plDisplay" runat="server" controlname="optSource" suffix=":" />
+        <dnn:label id="plDisplay" runat="server" controlname="optDisplay" suffix=":" />
         <asp:RadioButtonList ID="optDisplay" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow" CssClass="dnnFormRadioButtons" OnSelectedIndexChanged="optDisplay_SelectedIndexChanged" AutoPostBack="True">
             <asp:ListItem Value="T" resourcekey="Template">Template</asp:ListItem>
             <asp:ListItem Value="L" resourcekey="Legacy">Legacy</asp:ListItem>

@@ -58,6 +58,9 @@ namespace Dnn.Modules.Vendors
         private int BannerId = Null.NullInteger;
         private int VendorId = Null.NullInteger;
         protected Label lblBannerGroup;
+        protected DotNetNuke.UI.UserControls.ModuleAuditControl ctlAudit;
+        protected DotNetNuke.Web.UI.WebControls.DnnUrlControl ctlImage;
+        protected DotNetNuke.Web.UI.WebControls.DnnUrlControl ctlURL;
 
         public new int PortalId
         {
@@ -155,10 +158,10 @@ namespace Dnn.Modules.Vendors
                             }
                             txtImpressions.Text = banner.Impressions.ToString();
                             txtCPM.Text = banner.CPM.ToString();
-                            
-                            StartDatePicker.SelectedDate = Null.IsNull(banner.StartDate) ? (DateTime?) null : banner.StartDate;
-                            EndDatePicker.SelectedDate = Null.IsNull(banner.EndDate) ? (DateTime?)null : banner.EndDate;
-                            
+
+                            StartDatePicker.Text = Null.IsNull(banner.StartDate) ? null : banner.StartDate.ToString("yyyy-MM-dd"); // ToShortDateString();
+                            EndDatePicker.Text = Null.IsNull(banner.EndDate) ? null : banner.EndDate.ToString("yyyy-MM-dd"); //ToShortDateString();
+
                             optCriteria.Items.FindByValue(banner.Criteria.ToString()).Selected = true;
 
                             ctlAudit.CreatedByUser = banner.CreatedByUser;
@@ -271,16 +274,19 @@ namespace Dnn.Modules.Vendors
                         BannerId = -1;
                     }
                     DateTime startDate = Null.NullDate;
-                    if (StartDatePicker.SelectedDate.HasValue)
+                    DateTime startResult;
+                    if (DateTime.TryParse(StartDatePicker.Text, out startResult))
                     {
-                        startDate = StartDatePicker.SelectedDate.Value;
+                        startDate = startResult;
                     }
+
                     DateTime endDate = Null.NullDate;
-                    if (EndDatePicker.SelectedDate.HasValue)
+                    DateTime endResult;
+                    if (DateTime.TryParse(EndDatePicker.Text, out endResult))
                     {
-                        endDate = EndDatePicker.SelectedDate.Value;
+                        endDate = endResult;
                     }
-					
+
                     //Create an instance of the Banner DB component
                     var objBanner = new BannerInfo();
                     objBanner.BannerId = BannerId;
@@ -340,8 +346,8 @@ namespace Dnn.Modules.Vendors
         {
             try
             {
-                StartDatePicker.SelectedDate = null;
-                EndDatePicker.SelectedDate = null;
+                StartDatePicker.Text = null;
+                EndDatePicker.Text = null;
                 cmdDelete.Visible = false;
                 cmdCopy.Visible = false;
                 cmdEmail.Visible = false;
